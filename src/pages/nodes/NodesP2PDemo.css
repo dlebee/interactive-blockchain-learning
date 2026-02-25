@@ -1,0 +1,83 @@
+.nodes-p2p-demo {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.nodes-p2p-svg {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.nodes-p2p-demo .mesh-edge {
+  stroke: rgba(34, 197, 94, 0.5);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.nodes-p2p-demo .p2p-inner-line {
+  stroke: rgba(34, 197, 94, 0.18);
+  stroke-width: 0.8;
+  fill: none;
+}
+
+.nodes-p2p-demo .p2p-message {
+  opacity: 0.6;
+}
+
+.nodes-p2p-demo .node-outer {
+  fill: rgba(34, 197, 94, 0.2);
+  stroke: #22c55e;
+  stroke-width: 2;
+}
+
+.nodes-p2p-demo .node-inner {
+  fill: #22c55e;
+  opacity: 0.9;
+}
+
+.nodes-p2p-label {
+  font-size: 11px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+}
+
+.nodes-p2p-label-header {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text);
+}
+
+.nodes-p2p-label-sub {
+  font-size: 10px;
+  fill: var(--text-muted);
+}
+
+.nodes-p2p-legend {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.nodes-p2p-demo .legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+  vertical-align: middle;
+}
+
+.nodes-p2p-demo .node-dot {
+  background: #22c55e;
+}
+
+.nodes-p2p-demo .msg-dot {
+  background: #06b6d4;
+}

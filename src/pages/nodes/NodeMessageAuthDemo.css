@@ -1,0 +1,213 @@
+.node-auth-demo {
+  margin-top: 2rem;
+}
+
+.node-auth-demo-card {
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.node-auth-step-indicator {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.node-auth-demo .step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.node-auth-demo .step-dot:hover {
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.node-auth-demo .step-dot.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.node-auth-demo .step-dot.done {
+  background: rgba(34, 197, 94, 0.4);
+  border-color: rgba(34, 197, 94, 0.6);
+}
+
+.node-auth-demo h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--accent);
+}
+
+.node-auth-demo-text {
+  color: var(--text, #e4e4e7);
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.node-auth-visual {
+  min-height: 80px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.auth-diagram {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-node {
+  padding: 1rem 1.5rem;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.auth-node-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.auth-key {
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+
+.auth-key.private {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+.auth-key.public {
+  background: rgba(6, 182, 212, 0.2);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+.auth-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.flow-step {
+  padding: 0.6rem 1rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.flow-step.signed {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.flow-step.verified {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.flow-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.flow-step code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+}
+
+.flow-arrow {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.verify-check {
+  font-size: 1.25rem;
+  color: #22c55e;
+}
+
+.node-auth-demo-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.node-auth-demo .next-btn {
+  background: var(--accent);
+  color: #111;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.node-auth-demo .next-btn:hover {
+  filter: brightness(1.1);
+}
+
+.node-auth-completed {
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.node-auth-demo .start-over-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.node-auth-demo .start-over-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.node-auth-demo-note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.auth-original {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.original-row {
+  padding: 0.5rem 0.75rem;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.original-label {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.original-row.tx-note {
+  background: rgba(6, 182, 212, 0.15);
+}

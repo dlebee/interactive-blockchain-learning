@@ -119,6 +119,15 @@
   font-weight: 500;
 }
 
+.nav-sub-items {
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+}
+
+.nav-sub-link {
+  font-size: 0.85rem;
+}
+
 .github-link {
   display: flex;
   align-items: center;

@@ -7,6 +7,9 @@ import {
   TransactionsPage,
   WalletPage,
   OperatorsUsersPage,
+  CryptocurrencyPage,
+  NodesPage,
+  NodesGossipPage,
 } from './pages'
 
 function App() {
@@ -20,6 +23,9 @@ function App() {
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="wallet" element={<WalletPage />} />
           <Route path="operators-users" element={<OperatorsUsersPage />} />
+          <Route path="cryptocurrency" element={<CryptocurrencyPage />} />
+          <Route path="nodes" element={<NodesPage />} />
+          <Route path="nodes/gossip" element={<NodesGossipPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

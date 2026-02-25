@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { siteConfig } from '../../config/site'
 import { navConfig } from '../../config/navigation'
@@ -34,6 +34,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
 export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
@@ -60,13 +61,35 @@ export function Sidebar() {
               <li key={item.path}>
                 <NavLink
                   to={item.path ? `/${item.path}` : '/'}
-                  className={({ isActive }) =>
-                    `nav-link ${isActive ? 'active' : ''}`
-                  }
+                  className={({ isActive }) => {
+                    const active =
+                      isActive ||
+                      (item.children?.some(
+                        (c) => location.pathname === `/${c.path}`
+                      ) ?? false)
+                    return `nav-link ${active ? 'active' : ''}`
+                  }}
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
                 </NavLink>
+                {item.children && item.children.length > 0 && (
+                  <ul className="nav-items nav-sub-items">
+                    {item.children.map((child) => (
+                      <li key={child.path}>
+                        <NavLink
+                          to={`/${child.path}`}
+                          className={({ isActive }) =>
+                            `nav-link nav-sub-link ${isActive ? 'active' : ''}`
+                          }
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {child.label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>

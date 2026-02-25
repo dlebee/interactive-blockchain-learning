@@ -1,0 +1,71 @@
+.nodes-full-picture-demo {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.nodes-full-picture-svg {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.nodes-full-picture-demo .node-edge {
+  stroke: rgba(34, 197, 94, 0.4);
+  stroke-width: 1;
+  fill: none;
+}
+
+.nodes-full-picture-demo .node-circle {
+  fill: rgba(34, 197, 94, 0.2);
+  stroke: #22c55e;
+  stroke-width: 2;
+}
+
+.nodes-full-picture-demo .node-inner {
+  fill: #22c55e;
+  opacity: 0.8;
+}
+
+.nodes-full-picture-demo .chain-block {
+  fill: rgba(34, 197, 94, 0.15);
+  stroke: rgba(34, 197, 94, 0.5);
+  stroke-width: 1;
+  rx: 3;
+}
+
+.nodes-full-picture-demo .chain-block-pending {
+  fill: rgba(245, 158, 11, 0.15);
+  stroke: rgba(245, 158, 11, 0.6);
+  stroke-dasharray: 4 3;
+}
+
+.nodes-full-picture-demo .chain-block-id {
+  font-size: 8px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.nodes-full-picture-demo .demo-label-header {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text);
+  text-anchor: middle;
+}
+
+.nodes-full-picture-demo .demo-label-sub {
+  font-size: 10px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+}
+
+.nodes-full-picture-demo .demo-label-footer {
+  font-size: 10px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+}

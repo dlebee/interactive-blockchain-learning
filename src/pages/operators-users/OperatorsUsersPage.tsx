@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { OperatorsUsersDemo } from './OperatorsUsersDemo'
 
 export function OperatorsUsersPage() {
@@ -31,6 +32,11 @@ export function OperatorsUsersPage() {
         block, packs transactions into it, and extends the chain.
       </p>
       <OperatorsUsersDemo />
+      <p className="page-next-link">
+        <Link to="/cryptocurrency">What is Cryptocurrency? →</Link>
+        {' · '}
+        <Link to="/nodes">Nodes →</Link>
+      </p>
     </div>
   )
 }

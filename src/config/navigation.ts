@@ -4,6 +4,7 @@
 export interface NavItem {
   label: string
   path: string
+  children?: NavItem[]
 }
 
 export interface NavCategory {
@@ -26,6 +27,12 @@ export const navConfig: NavCategory[] = [
       { label: 'Transactions', path: 'transactions' },
       { label: 'Accounts', path: 'wallet' },
       { label: 'Operators & Users', path: 'operators-users' },
+      { label: 'Cryptocurrency', path: 'cryptocurrency' },
+      {
+        label: 'Nodes',
+        path: 'nodes',
+        children: [{ label: 'Gossip', path: 'nodes/gossip' }],
+      },
     ],
   },
 ]

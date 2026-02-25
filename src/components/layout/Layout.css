@@ -38,3 +38,17 @@
 .page-next-link a {
   color: var(--accent);
 }
+
+.page-note {
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted, #a1a1aa);
+}
+
+.page-note strong {
+  color: var(--accent);
+}

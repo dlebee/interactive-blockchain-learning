@@ -1,0 +1,135 @@
+.gossip-inout-demo {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.gossip-inout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  width: 100%;
+}
+
+.gossip-inout-svg {
+  width: 100%;
+  height: auto;
+}
+
+.peer-edge {
+  stroke-width: 2.5;
+  fill: none;
+  transition: stroke 0.2s ease, opacity 0.2s ease;
+}
+
+.peer-edge-neutral {
+  stroke: rgba(6, 182, 212, 0.5);
+}
+
+.peer-edge-in {
+  stroke: rgba(34, 197, 94, 0.85);
+  stroke-width: 3;
+}
+
+.peer-edge-out {
+  stroke: rgba(249, 115, 22, 0.85);
+  stroke-width: 3;
+}
+
+.peer-edge-dim {
+  stroke: rgba(100, 116, 139, 0.35);
+  opacity: 0.5;
+}
+
+.peer-node {
+  fill: rgba(30, 41, 59, 0.95);
+  stroke: rgba(6, 182, 212, 0.8);
+  stroke-width: 2;
+  cursor: pointer;
+  transition: stroke 0.2s ease, transform 0.2s ease;
+}
+
+.peer-node:hover,
+.peer-node:focus {
+  stroke: #67e8f9;
+  outline: none;
+}
+
+.peer-node-focus {
+  stroke: #67e8f9;
+  stroke-width: 2.5;
+}
+
+.peer-label {
+  fill: #e2e8f0;
+  font-size: 16px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.gossip-legend {
+  fill: rgba(148, 163, 184, 0.85);
+  font-size: 10px;
+  text-anchor: middle;
+}
+
+.gossip-inout-callout {
+  padding: 1.25rem;
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+
+.gossip-inout-callout h4 {
+  margin: 0 0 1rem 0;
+  font-size: 15px;
+  color: #e2e8f0;
+}
+
+.callout-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.callout-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.callout-in {
+  background: rgba(34, 197, 94, 0.12);
+  border-left: 3px solid rgba(34, 197, 94, 0.7);
+}
+
+.callout-out {
+  background: rgba(249, 115, 22, 0.12);
+  border-left: 3px solid rgba(249, 115, 22, 0.7);
+}
+
+.callout-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.callout-peers {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.callout-hint {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.callout-placeholder {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(148, 163, 184, 0.9);
+}
