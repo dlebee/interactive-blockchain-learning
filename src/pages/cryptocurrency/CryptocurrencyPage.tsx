@@ -51,8 +51,14 @@ export function CryptocurrencyPage() {
         currency is how the system rewards the people who make it work.
       </p>
 
+      <p>
+        Tokens are a different idea: they are not the main currency of the
+        chain. To see how they work and how they differ by chain, go to{' '}
+        <Link to="/cryptocurrency/tokens">Tokens</Link>.
+      </p>
+
       <p className="page-next-link">
-        <Link to="/nodes">Nodes: the software behind operators →</Link>
+        <Link to="/cryptocurrency/native-currency-tokens">Native Currency →</Link>
       </p>
 
       <aside className="page-note">

@@ -27,7 +27,14 @@ export const navConfig: NavCategory[] = [
       { label: 'Transactions', path: 'transactions' },
       { label: 'Accounts', path: 'account' },
       { label: 'Operators & Users', path: 'operators-users' },
-      { label: 'Cryptocurrency', path: 'cryptocurrency' },
+      {
+        label: 'Cryptocurrency',
+        path: 'cryptocurrency',
+        children: [
+          { label: 'Native Currency', path: 'cryptocurrency/native-currency-tokens' },
+          { label: 'Tokens', path: 'cryptocurrency/tokens' },
+        ],
+      },
       {
         label: 'Nodes',
         path: 'nodes',

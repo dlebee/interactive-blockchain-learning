@@ -11,6 +11,8 @@ import {
   WalletsHotColdPage,
   OperatorsUsersPage,
   CryptocurrencyPage,
+  TokensPage,
+  NativeCurrencyTokensPage,
   NodesPage,
   NodesGossipPage,
   ConsensusPage,
@@ -37,6 +39,8 @@ function App() {
           <Route path="wallets/hot-cold" element={<WalletsHotColdPage />} />
           <Route path="operators-users" element={<OperatorsUsersPage />} />
           <Route path="cryptocurrency" element={<CryptocurrencyPage />} />
+          <Route path="cryptocurrency/tokens" element={<TokensPage />} />
+          <Route path="cryptocurrency/native-currency-tokens" element={<NativeCurrencyTokensPage />} />
           <Route path="nodes" element={<NodesPage />} />
           <Route path="nodes/gossip" element={<NodesGossipPage />} />
           <Route path="consensus" element={<ConsensusPage />} />

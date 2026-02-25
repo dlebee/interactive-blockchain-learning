@@ -89,3 +89,32 @@
 .page-note strong {
   color: var(--accent);
 }
+
+.native-currency-table {
+  width: 100%;
+  max-width: 420px;
+  margin: 0.75rem 0 1.5rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.native-currency-table th,
+.native-currency-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.native-currency-table th:first-child,
+.native-currency-table td:first-child {
+  white-space: nowrap;
+}
+
+.native-currency-table th {
+  background: rgba(51, 65, 85, 0.35);
+  font-weight: 600;
+}
+
+.native-currency-table tbody tr:nth-child(even) {
+  background: rgba(51, 65, 85, 0.15);
+}
