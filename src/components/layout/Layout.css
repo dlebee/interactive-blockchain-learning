@@ -1,0 +1,31 @@
+.layout {
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 260px;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 4rem 1.5rem 2rem;
+  }
+}
+
+.page {
+  max-width: 720px;
+}
+
+.page h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.page .lead {
+  font-size: 1.2rem;
+  color: var(--text-muted, #a1a1aa);
+  margin-bottom: 1.5rem;
+}

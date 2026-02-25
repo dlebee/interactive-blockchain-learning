@@ -1,0 +1,17 @@
+---
+description: Text style when generating content - no em dashes or hyphenated compounds
+alwaysApply: true
+---
+
+# Text Style for Generated Content
+
+When writing user-facing text (copy, descriptions, UI strings, documentation):
+
+**Never use:**
+- **Em dashes (—)** — Use a comma, period, or rephrase instead.
+- **Hyphenated compounds** like "hands-on", "real-time" — Use separate words ("hands on", "real time") or rephrase.
+
+**Examples:**
+- ❌ "add to—but no one can erase" → ✅ "add to, but no one can erase"
+- ❌ "hands-on demos" → ✅ "hands on demos" or "interactive demos"
+- ❌ "real-time updates" → ✅ "real time updates" or "live updates"
