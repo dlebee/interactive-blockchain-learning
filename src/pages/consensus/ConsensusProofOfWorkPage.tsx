@@ -19,7 +19,7 @@ export function ConsensusProofOfWorkPage() {
 
       <h2 id="longest-chain-and-slots">
         <a href="#longest-chain-and-slots" className="anchor-link" aria-label="Link to this section">
-          Longest chain wins, so we need predictable slots
+          Longest chain and predictable slots
         </a>
       </h2>
       <p>
@@ -83,13 +83,13 @@ export function ConsensusProofOfWorkPage() {
 
       <h2 id="longest-chain">
         <a href="#longest-chain" className="anchor-link" aria-label="Link to this section">
-          Longest chain and forks
+          Forks
         </a>
       </h2>
       <p>
         The canonical chain is typically the one with the <strong>most cumulative work</strong>: the
-        sum of the difficulty of all blocks. In practice, the longest valid chain usually has the
-        most work. When multiple miners find blocks at similar times, a temporary fork can occur.
+        sum of the difficulty of all blocks. When multiple miners find blocks at similar times, a
+        temporary fork can occur.
         The protocol may resolve this with a predefined rule (e.g. most transactions, highest
         value). Miners build on the branch they receive first; eventually one outpaces the other.
       </p>
