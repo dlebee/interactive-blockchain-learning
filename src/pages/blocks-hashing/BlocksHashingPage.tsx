@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { BlockChainDemo } from './BlockChainDemo'
 
 export function BlocksHashingPage() {
@@ -25,6 +26,10 @@ export function BlocksHashingPage() {
       </p>
       <p>Try it yourself. Build a chain, then edit any block and watch the digests update.</p>
       <BlockChainDemo />
+      <p>
+        See how blocks hold and verify transactions in{' '}
+        <Link to="/transactions">Transactions →</Link>
+      </p>
     </div>
   )
 }

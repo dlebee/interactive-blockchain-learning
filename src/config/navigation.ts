@@ -21,6 +21,10 @@ export const navConfig: NavCategory[] = [
   },
   {
     label: 'Core Concepts',
-    items: [{ label: 'Blocks & Hashing', path: 'blocks-hashing' }],
+    items: [
+      { label: 'Blocks & Hashing', path: 'blocks-hashing' },
+      { label: 'Transactions', path: 'transactions' },
+      { label: 'Accounts', path: 'wallet' },
+    ],
   },
 ]

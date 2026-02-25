@@ -1,0 +1,190 @@
+.asymmetric-demo {
+  margin-top: 2rem;
+}
+
+.asymmetric-demo-card {
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+}
+
+.asymmetric-demo h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--accent);
+}
+
+.asymmetric-demo-text {
+  color: var(--text, #e4e4e7);
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.asymmetric-demo-visual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  padding: 1.25rem 0;
+  margin-bottom: 1rem;
+}
+
+.comparison-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.comparison-card {
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.comparison-card.original {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.comparison-card.tampered {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.comparison-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.comparison-card.original .comparison-label {
+  color: #22c55e;
+}
+
+.comparison-card.tampered .comparison-label {
+  color: #ef4444;
+}
+
+.comparison-arrow {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+}
+
+.signed-piece {
+  min-width: 160px;
+  padding: 0.6rem 0.9rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+}
+
+.signed-piece.address-piece {
+  flex-basis: 100%;
+  max-width: 320px;
+}
+
+.piece-label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.signed-piece code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.signed-piece code.tampered {
+  color: #ef4444;
+}
+
+.verification-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.verification-badge.valid {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #22c55e;
+}
+
+.verification-badge.invalid {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.verification-icon {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.algorithms-list {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.algorithms-list-title {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.algorithms-list ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.algorithms-list li {
+  margin-bottom: 0.2rem;
+}
+
+.algorithms-list a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.algorithms-list a:hover {
+  text-decoration: underline;
+}
+
+.algorithms-list strong {
+  font-family: ui-monospace, monospace;
+}
+
+.asymmetric-demo-actions {
+  padding-top: 1rem;
+}
+
+.asymmetric-demo-loading {
+  color: var(--text-muted, #a1a1aa);
+}
+
+.asymmetric-demo.error-state {
+  color: #ef4444;
+}

@@ -1,0 +1,143 @@
+.transactions-demo {
+  margin-top: 2rem;
+}
+
+.transactions-demo-card {
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.transactions-demo h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--accent);
+}
+
+.transactions-demo-text {
+  color: var(--text, #e4e4e7);
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.transactions-demo-blocks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  padding: 1.25rem 0;
+  margin-bottom: 1rem;
+}
+
+.block-card {
+  min-width: 160px;
+  padding: 0.75rem 1rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+}
+
+.block-card.genesis.highlight {
+  border-color: rgba(34, 197, 94, 0.6);
+  background: rgba(34, 197, 94, 0.12);
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+}
+
+.block-card.highlight-target {
+  border-color: rgba(245, 158, 11, 0.6);
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.block-card-header {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.block-card.genesis .block-card-header {
+  color: #22c55e;
+}
+
+.block-card-field {
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+}
+
+.block-card-field:last-child {
+  margin-bottom: 0;
+}
+
+.block-card-field.balances {
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed rgba(245, 158, 11, 0.3);
+}
+
+.block-card-field.transaction {
+  background: rgba(245, 158, 11, 0.15);
+  padding: 0.3rem 0.4rem;
+  border-radius: 4px;
+}
+
+.block-card-label {
+  display: block;
+  color: var(--text-muted, #a1a1aa);
+  font-size: 0.65rem;
+  margin-bottom: 0.15rem;
+}
+
+.block-card-field code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.7rem;
+}
+
+.balance-row,
+.tx-row {
+  font-size: 0.7rem;
+  margin-bottom: 0.15rem;
+}
+
+.balance-row:last-child,
+.tx-row:last-child {
+  margin-bottom: 0;
+}
+
+.block-arrow {
+  color: var(--accent);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.verification-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #22c55e;
+}
+
+.verification-check {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.transactions-demo-actions {
+  padding-top: 0.5rem;
+}
+
+.transactions-demo-link {
+  color: var(--text-muted, #a1a1aa);
+  font-size: 0.9rem;
+}
+
+.transactions-demo-link a {
+  color: var(--accent);
+}

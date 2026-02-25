@@ -1,3 +1,5 @@
 export { HomePage } from './home/HomePage'
 export { WhatIsBlockchainPage } from './what-is-blockchain/WhatIsBlockchainPage'
 export { BlocksHashingPage } from './blocks-hashing/BlocksHashingPage'
+export { TransactionsPage } from './transactions/TransactionsPage'
+export { WalletPage } from './wallet/WalletPage'
