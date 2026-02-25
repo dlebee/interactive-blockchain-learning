@@ -6,13 +6,21 @@ import { GossipUnconnectedDemo } from './GossipUnconnectedDemo'
 export function NodesGossipPage() {
   return (
     <div className="page">
-      <h1>Gossip</h1>
+      <h1 id="gossip">
+        <a href="#gossip" className="anchor-link" aria-label="Link to this section">
+          Gossip
+        </a>
+      </h1>
       <p className="lead">
         How messages travel the P2P network: in-peers and out-peers, network
         delay (delta), and delivery between nodes that are not directly connected.
       </p>
 
-      <h2>In-peers and out-peers</h2>
+      <h2 id="in-peers-and-out-peers">
+        <a href="#in-peers-and-out-peers" className="anchor-link" aria-label="Link to this section">
+          In-peers and out-peers
+        </a>
+      </h2>
       <p>
         In a realistic P2P graph, each node has two kinds of neighbors. Its{" "}
         <strong>in-peers</strong> are the nodes that send messages to it. Its{" "}
@@ -22,7 +30,11 @@ export function NodesGossipPage() {
       </p>
       <GossipInOutDemo />
 
-      <h2>Network delay (delta)</h2>
+      <h2 id="network-delay-delta">
+        <a href="#network-delay-delta" className="anchor-link" aria-label="Link to this section">
+          Network delay (delta)
+        </a>
+      </h2>
       <p>
         There is a typical network delay, often called{" "}
         <strong>delta</strong> (Δ). Nodes assume they must gossip each message
@@ -33,15 +45,18 @@ export function NodesGossipPage() {
       </p>
       <GossipDeltaSection />
 
-      <h2>Unconnected nodes</h2>
-      <p>
-        A sends to C but is not connected to C. B sits in between. A creates a
-        message: delivery to B, inner (content for C, pubkey_A, sig_A), and
-        sig_A. B creates a new message: delivery to C, inner unchanged, sig_B.
-        Each hop adds an outer signature; the inner stays authenticated by A.
-      </p>
+      <h2 id="unconnected-nodes">
+        <a href="#unconnected-nodes" className="anchor-link" aria-label="Link to this section">
+          Message delivery between unconnected nodes
+        </a>
+      </h2>
       <GossipUnconnectedDemo />
 
+      <h2 id="discovery">
+        <a href="#discovery" className="anchor-link" aria-label="Link to this section">
+          Discovery
+        </a>
+      </h2>
       <p>
         Typical discovery such as{" "}
         <a

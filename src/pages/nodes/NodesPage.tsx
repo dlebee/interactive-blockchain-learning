@@ -59,6 +59,8 @@ export function NodesPage() {
       <p className="page-next-link">
         <Link to="/nodes/gossip">Gossip (advanced)</Link>
         {' · '}
+        <Link to="/consensus">Consensus</Link>
+        {' · '}
         <Link to="/operators-users">Operators & Users</Link>
       </p>
     </div>

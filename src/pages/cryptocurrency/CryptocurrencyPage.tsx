@@ -25,7 +25,7 @@ export function CryptocurrencyPage() {
       <p>
         The name comes from two ideas. First, blockchains use cryptography to
         secure themselves, including the asymmetric encryption you saw in{' '}
-        <Link to="/wallet">Accounts</Link>. Second, they need a currency to pay
+        <Link to="/account">Accounts</Link>. Second, they need a currency to pay
         operators for maintaining and securing the chain. Put them together:
         cryptography plus currency gives you cryptocurrency.
       </p>

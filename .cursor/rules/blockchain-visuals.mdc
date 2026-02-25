@@ -1,0 +1,15 @@
+---
+description: Blockchain and consensus visual conventions
+globs: **/consensus/**/*,**/blocks*/**/*
+alwaysApply: false
+---
+
+# Blockchain Visual Conventions
+
+## Block Chain Arrows
+
+When showing blocks linked in a chain (e.g. in consensus slot animations):
+
+- **Arrow direction**: The arrow always points from the **new block** to the **older block**
+- This represents the "prev" or "parent" link: each new block references the previous one
+- Example: `[block 1] ← [block 2] ← [block 3]` (block 2 links to block 1, block 3 links to block 2)

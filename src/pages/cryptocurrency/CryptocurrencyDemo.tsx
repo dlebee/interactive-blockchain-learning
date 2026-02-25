@@ -114,7 +114,7 @@ export function CryptocurrencyDemo() {
 
       <p className="crypto-demo-note">
         Want to revisit the cryptography behind it?{' '}
-        <Link to="/wallet">Accounts</Link>
+        <Link to="/account">Accounts</Link>
       </p>
     </div>
   )

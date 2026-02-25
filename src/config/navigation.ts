@@ -25,7 +25,7 @@ export const navConfig: NavCategory[] = [
     items: [
       { label: 'Blocks & Hashing', path: 'blocks-hashing' },
       { label: 'Transactions', path: 'transactions' },
-      { label: 'Accounts', path: 'wallet' },
+      { label: 'Accounts', path: 'account' },
       { label: 'Operators & Users', path: 'operators-users' },
       { label: 'Cryptocurrency', path: 'cryptocurrency' },
       {
@@ -33,6 +33,7 @@ export const navConfig: NavCategory[] = [
         path: 'nodes',
         children: [{ label: 'Gossip', path: 'nodes/gossip' }],
       },
+      { label: 'Consensus', path: 'consensus' },
     ],
   },
 ]

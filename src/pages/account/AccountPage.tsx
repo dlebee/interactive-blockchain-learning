@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { AsymmetricDemo } from './AsymmetricDemo'
 
-export function WalletPage() {
+export function AccountPage() {
   return (
     <div className="page">
       <h1>Accounts</h1>

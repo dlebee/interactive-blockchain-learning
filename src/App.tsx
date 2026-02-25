@@ -5,11 +5,12 @@ import {
   WhatIsBlockchainPage,
   BlocksHashingPage,
   TransactionsPage,
-  WalletPage,
+  AccountPage,
   OperatorsUsersPage,
   CryptocurrencyPage,
   NodesPage,
   NodesGossipPage,
+  ConsensusPage,
 } from './pages'
 
 function App() {
@@ -21,11 +22,12 @@ function App() {
           <Route path="what-is-blockchain" element={<WhatIsBlockchainPage />} />
           <Route path="blocks-hashing" element={<BlocksHashingPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
-          <Route path="wallet" element={<WalletPage />} />
+          <Route path="account" element={<AccountPage />} />
           <Route path="operators-users" element={<OperatorsUsersPage />} />
           <Route path="cryptocurrency" element={<CryptocurrencyPage />} />
           <Route path="nodes" element={<NodesPage />} />
           <Route path="nodes/gossip" element={<NodesGossipPage />} />
+          <Route path="consensus" element={<ConsensusPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

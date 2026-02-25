@@ -163,7 +163,7 @@ export function TransactionsDemo() {
       {isLast && (
         <p className="transactions-demo-link">
           Next up: where do those tokens live?{' '}
-          <Link to="/wallet">Accounts →</Link>
+          <Link to="/account">Accounts →</Link>
         </p>
       )}
     </div>

@@ -1,0 +1,167 @@
+.consensus-who-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.who-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.who-section-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.who-caption {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.race-chains {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.race-chain-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.race-node-label {
+  width: 24px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #e2e8f0;
+}
+
+.race-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+}
+
+.race-chain-segment {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.race-block {
+  color: rgba(34, 197, 94, 0.9);
+  font-size: 14px;
+}
+
+.race-arrow {
+  color: rgba(6, 182, 212, 0.7);
+  font-size: 12px;
+}
+
+.turns-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  justify-content: center;
+  min-height: 28px;
+}
+
+.turns-chain-segment {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.turns-chain-block {
+  color: rgba(249, 115, 22, 0.9);
+  font-size: 14px;
+}
+
+.turns-chain-arrow {
+  color: rgba(6, 182, 212, 0.7);
+  font-size: 12px;
+}
+
+.turns-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.turns-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border: 2px solid rgba(100, 116, 139, 0.5);
+  background: rgba(51, 65, 85, 0.3);
+  min-width: 80px;
+  transition: all 0.3s ease;
+}
+
+.turns-node.leader {
+  border-color: rgba(249, 115, 22, 0.8);
+  background: rgba(249, 115, 22, 0.15);
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.2);
+}
+
+.turns-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.turns-badge {
+  font-size: 10px;
+  color: #fdba74;
+  font-weight: 600;
+}
+
+.turns-slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.turns-slot {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(51, 65, 85, 0.4);
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  transition: all 0.3s ease;
+}
+
+.turns-slot.current {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.6);
+}
+
+.turns-slot-num {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.turns-slot-leader {
+  color: #67e8f9;
+  font-weight: 600;
+}
