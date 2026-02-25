@@ -29,3 +29,12 @@
   color: var(--text-muted, #a1a1aa);
   margin-bottom: 1.5rem;
 }
+
+.page-next-link {
+  margin-top: 2rem;
+  color: var(--text-muted, #a1a1aa);
+}
+
+.page-next-link a {
+  color: var(--accent);
+}

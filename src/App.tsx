@@ -6,6 +6,7 @@ import {
   BlocksHashingPage,
   TransactionsPage,
   WalletPage,
+  OperatorsUsersPage,
 } from './pages'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="blocks-hashing" element={<BlocksHashingPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="wallet" element={<WalletPage />} />
+          <Route path="operators-users" element={<OperatorsUsersPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

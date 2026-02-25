@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { AsymmetricDemo } from './AsymmetricDemo'
 
 export function WalletPage() {
@@ -36,6 +37,10 @@ export function WalletPage() {
       </p>
       <p>Click Next to walk through a signed message and what happens when it is tampered with.</p>
       <AsymmetricDemo />
+      <p className="page-next-link">
+        Next: who runs the network?{' '}
+        <Link to="/operators-users">Operators & Users →</Link>
+      </p>
     </div>
   )
 }
