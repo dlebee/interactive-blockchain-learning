@@ -74,6 +74,8 @@ export function ConsensusPage() {
       <p className="page-next-link">
         <Link to="/nodes">Nodes</Link>
         {' · '}
+        <Link to="/blockspace">Blockspace</Link>
+        {' · '}
         <Link to="/operators-users">Operators & Users</Link>
       </p>
     </div>

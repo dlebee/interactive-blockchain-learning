@@ -1,0 +1,84 @@
+.nonce-why-demo {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.nonce-why-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nonce-why-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: rgba(51, 65, 85, 0.5);
+  border-radius: 6px;
+  border: 1px solid rgba(100, 116, 139, 0.4);
+}
+
+.nonce-why-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #67e8f9;
+}
+
+.nonce-why-hint {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.nonce-why-arrows {
+  display: flex;
+  gap: 2rem;
+  font-size: 18px;
+  color: rgba(6, 182, 212, 0.5);
+}
+
+.nonce-why-nodes {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nonce-why-node {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem 0.9rem;
+  background: rgba(100, 116, 139, 0.2);
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  border-radius: 6px;
+  min-width: 100px;
+}
+
+.nonce-why-node-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.nonce-why-order {
+  font-size: 11px;
+  color: #e2e8f0;
+}
+
+.nonce-why-time {
+  font-size: 9px;
+  color: rgba(239, 68, 68, 0.8);
+}
+
+.nonce-why-caption {
+  margin: 0.75rem 0 0;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.9);
+  text-align: center;
+}

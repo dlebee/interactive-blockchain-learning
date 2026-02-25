@@ -11,6 +11,10 @@ import {
   NodesPage,
   NodesGossipPage,
   ConsensusPage,
+  BlockspacePage,
+  TransactionInclusionPage,
+  TransactionInclusionNoncePage,
+  TransactionInclusionReplacingPage,
 } from './pages'
 
 function App() {
@@ -28,6 +32,10 @@ function App() {
           <Route path="nodes" element={<NodesPage />} />
           <Route path="nodes/gossip" element={<NodesGossipPage />} />
           <Route path="consensus" element={<ConsensusPage />} />
+          <Route path="blockspace" element={<BlockspacePage />} />
+          <Route path="transaction-inclusion" element={<TransactionInclusionPage />} />
+          <Route path="transaction-inclusion/nonce" element={<TransactionInclusionNoncePage />} />
+          <Route path="transaction-inclusion/replacing" element={<TransactionInclusionReplacingPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

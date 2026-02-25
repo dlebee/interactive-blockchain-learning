@@ -30,6 +30,20 @@
   margin-bottom: 1.5rem;
 }
 
+.page-figure {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  background: rgba(51, 65, 85, 0.3);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+}
+
+.page-figure blockquote {
+  margin: 0;
+  font-style: italic;
+  color: rgba(226, 232, 240, 0.95);
+}
+
 .page .anchor-link {
   color: inherit;
   text-decoration: none;

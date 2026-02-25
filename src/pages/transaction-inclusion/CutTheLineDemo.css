@@ -1,0 +1,271 @@
+.cut-demo {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.cut-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 220px;
+}
+
+/* Blockchain on top */
+.cut-chain-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cut-chain-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #67e8f9;
+}
+
+.cut-chain {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.cut-chain-link {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.cut-block-arrow {
+  font-size: 18px;
+  color: rgba(6, 182, 212, 0.5);
+  margin: 0 0.2rem;
+}
+
+.cut-block-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  min-width: 95px;
+}
+
+.cut-block-confirmed {
+  background: rgba(100, 116, 139, 0.25);
+  border: 1px solid rgba(100, 116, 139, 0.45);
+}
+
+.cut-block-pending {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.45);
+}
+
+.cut-block-pending.receiving {
+  box-shadow: 0 0 12px 2px rgba(6, 182, 212, 0.25);
+}
+
+.cut-block-num {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.cut-block-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.cut-slot {
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0.12rem 0.3rem;
+  background: rgba(6, 182, 212, 0.08);
+  border-radius: 4px;
+  border: 1px dashed rgba(6, 182, 212, 0.3);
+  font-size: 10px;
+}
+
+.cut-block-confirmed .cut-slot {
+  background: rgba(100, 116, 139, 0.15);
+  border-style: solid;
+  border-color: rgba(100, 116, 139, 0.25);
+}
+
+.cut-slot-tx {
+  color: #e2e8f0;
+  animation: cut-slot-in 0.3s ease-out;
+}
+
+.prev-tx {
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.cut-slot-fee {
+  color: #fdba74;
+  font-weight: 600;
+  margin-left: 0.2rem;
+}
+
+@keyframes cut-slot-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cut-slot-empty {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.35);
+}
+
+/* Flow zone: up arrow from mempool to chain */
+.cut-flow-zone {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 28px;
+}
+
+.cut-flow-arrow {
+  font-size: 20px;
+  color: rgba(6, 182, 212, 0.5);
+}
+
+.cut-flying-tx {
+  position: absolute;
+  font-size: 10px;
+  padding: 0.2rem 0.45rem;
+  background: rgba(249, 115, 22, 0.95);
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 600;
+  animation: cut-fly-up 0.45s ease-out forwards;
+  white-space: nowrap;
+}
+
+@keyframes cut-fly-up {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.85);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+/* Mempool at bottom */
+.cut-mempool-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.6rem 0.9rem;
+  background: rgba(51, 65, 85, 0.4);
+  border-radius: 6px;
+  border: 1px solid rgba(100, 116, 139, 0.4);
+}
+
+.cut-queue-label {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.cut-mempool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.cut-tx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.45rem;
+  border-radius: 4px;
+  font-size: 11px;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  transition: opacity 0.25s;
+}
+
+.cut-tx.cutting {
+  background: rgba(249, 115, 22, 0.25);
+  border-color: rgba(249, 115, 22, 0.6);
+  animation: cut-highlight 0.5s ease-out;
+}
+
+@keyframes cut-highlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 10px 2px rgba(249, 115, 22, 0.4);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+
+.cut-tx-label {
+  color: #e2e8f0;
+}
+
+.cut-tx-fee {
+  font-weight: 600;
+  color: #fdba74;
+}
+
+.cut-tx.cutting .cut-tx-fee {
+  color: #fed7aa;
+}
+
+.cut-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.cut-caption {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.cut-reset-btn {
+  padding: 0.4rem 0.85rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: #67e8f9;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.45);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.cut-reset-btn:hover {
+  background: rgba(6, 182, 212, 0.25);
+  border-color: rgba(6, 182, 212, 0.6);
+}

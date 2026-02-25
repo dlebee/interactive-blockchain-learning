@@ -1,0 +1,235 @@
+.fee-model-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.fee-model-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.25);
+}
+
+.fee-model-section:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.fee-model-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #67e8f9;
+  letter-spacing: 0.02em;
+  animation: fee-fade-slide 0.35s ease-out both;
+}
+
+.fee-model-section:nth-child(1) .fee-model-subtitle {
+  animation-delay: 0ms;
+}
+.fee-model-section:nth-child(2) .fee-model-subtitle {
+  animation-delay: 80ms;
+}
+.fee-model-section:nth-child(3) .fee-model-subtitle {
+  animation-delay: 160ms;
+}
+
+@keyframes fee-fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fee-tx-stagger {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fee-arrow-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.fee-animate-in {
+  animation: fee-fade-slide 0.4s ease-out both;
+}
+
+.fee-tx-stagger {
+  opacity: 0;
+  animation: fee-tx-stagger 0.35s ease-out both;
+}
+
+.fee-arrow-pulse {
+  animation: fee-arrow-pulse 2s ease-in-out infinite;
+}
+
+.fee-base-animate {
+  animation: fee-fade-slide 0.35s ease-out 0.1s both;
+}
+
+.fee-model-panel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-height: 120px;
+}
+
+.fee-queue {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem;
+  background: rgba(51, 65, 85, 0.4);
+  border-radius: 6px;
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  min-width: 120px;
+}
+
+.fee-queue-label {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.9);
+  margin-bottom: 0.25rem;
+}
+
+.fee-tx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.fixed-tx {
+  background: rgba(148, 163, 184, 0.15);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.competitive-tx {
+  background: rgba(249, 115, 22, 0.12);
+  border: 1px solid rgba(249, 115, 22, 0.35);
+}
+
+.mixed-tx {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.tx-label {
+  color: #e2e8f0;
+}
+
+.tx-fee {
+  font-weight: 600;
+}
+
+.fixed-tx .tx-fee {
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.competitive-tx .tx-fee {
+  color: #fdba74;
+}
+
+.mixed-tx .tx-fee {
+  color: #86efac;
+}
+
+.fee-arrow {
+  font-size: 20px;
+  color: rgba(6, 182, 212, 0.6);
+}
+
+.fee-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  border-radius: 6px;
+  min-width: 140px;
+}
+
+.fee-block-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #67e8f9;
+}
+
+.fee-block-txs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.fee-block-txs.fee-ordered {
+  flex-direction: column;
+}
+
+.block-tx {
+  font-size: 11px;
+  color: rgba(203, 213, 225, 0.95);
+}
+
+.block-tx-fee {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.fee-block-hint {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.fee-mixed-base {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 6px;
+}
+
+.base-label {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.base-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #86efac;
+}
+
+.base-hint {
+  font-size: 9px;
+  color: rgba(148, 163, 184, 0.75);
+}

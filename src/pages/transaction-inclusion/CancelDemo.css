@@ -1,0 +1,150 @@
+.cancel-demo {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 10px;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  overflow: hidden;
+}
+
+.cancel-layout {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.cancel-slot-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(51, 65, 85, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cancel-slot-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.cancel-slot-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 44px;
+}
+
+.cancel-tx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  font-size: 13px;
+  border-radius: 6px;
+  transition: opacity 0.3s ease;
+}
+
+.cancel-tx-op {
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.cancel-tx-fee {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fdba74;
+}
+
+.cancel-stuck {
+  background: rgba(249, 115, 22, 0.15);
+  border: 1px solid rgba(249, 115, 22, 0.45);
+}
+
+.cancel-new {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+}
+
+.cancel-new .cancel-tx-fee {
+  color: #86efac;
+}
+
+.cancel-fee-old {
+  text-decoration: line-through;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.cancel-tx-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cancel-fading {
+  opacity: 0.6;
+}
+
+.cancel-slide-in {
+  animation: cancel-slide-in 0.4s ease-out;
+}
+
+@keyframes cancel-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cancel-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cancel-arrow {
+  font-size: 22px;
+  color: rgba(6, 182, 212, 0.6);
+  font-weight: 300;
+}
+
+.cancel-status {
+  font-size: 12px;
+  font-weight: 500;
+  color: #67e8f9;
+}
+
+.cancel-caption {
+  margin: 1rem 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.cancel-reset {
+  margin-top: 0.75rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 11px;
+  font-weight: 500;
+  color: #67e8f9;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancel-reset:hover {
+  background: rgba(6, 182, 212, 0.25);
+}

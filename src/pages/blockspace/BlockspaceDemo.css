@@ -1,0 +1,94 @@
+.blockspace-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.blockspace-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.blockspace-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.blockspace-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.blockspace-hint {
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.blockspace-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  min-height: 44px;
+}
+
+.blockspace-segment {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.blockspace-arrow {
+  color: rgba(6, 182, 212, 0.6);
+  font-size: 12px;
+}
+
+.blockspace-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 4px;
+  min-height: 36px;
+}
+
+.capped-block {
+  min-width: 48px;
+  background: rgba(34, 197, 94, 0.4);
+  border: 1px solid rgba(34, 197, 94, 0.6);
+  transition: opacity 0.2s ease;
+}
+
+.uncapped-block {
+  min-width: 42px;
+  background: rgba(249, 115, 22, 0.4);
+  border: 1px solid rgba(249, 115, 22, 0.6);
+  transition: opacity 0.2s ease;
+}
+
+.block-time {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(203, 213, 225, 0.95);
+}
+
+.block-size {
+  font-size: 9px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.blockspace-caption {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.9);
+}
