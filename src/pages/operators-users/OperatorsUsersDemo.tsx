@@ -322,11 +322,17 @@ export function OperatorsUsersDemo() {
         ))}
 
         {/* Labels */}
-        <text x={CENTER_X} y={CENTER_Y - OPERATOR_RADIUS - 18} className="mesh-label">
-          Operators (P2P mesh)
+        <text x={CENTER_X} y={CENTER_Y - OPERATOR_RADIUS - 24} className="mesh-label mesh-label-header">
+          Operators
         </text>
-        <text x={CENTER_X} y={CENTER_Y + USER_RADIUS + 18} className="user-label">
-          Users (submit transactions)
+        <text x={CENTER_X} y={CENTER_Y - OPERATOR_RADIUS - 10} className="mesh-label mesh-label-sub">
+          P2P mesh, relay transactions
+        </text>
+        <text x={CENTER_X} y={CENTER_Y + USER_RADIUS + 10} className="user-label user-label-header">
+          Users
+        </text>
+        <text x={CENTER_X} y={CENTER_Y + USER_RADIUS + 24} className="user-label user-label-sub">
+          Submit transactions
         </text>
         <text x={CENTER_X} y={CHAIN_Y - BLOCK_HEIGHT / 2 - 8} className="chain-label">
           Canonical chain

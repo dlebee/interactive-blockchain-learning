@@ -5,24 +5,30 @@ export function OperatorsUsersPage() {
     <div className="page">
       <h1>The Roles of Participants in Blockchain</h1>
       <p className="lead">
-        In a blockchain network, there are many types of participants. Different
-        blockchains may have varying sets of participants, but they are usually
-        grouped into two main categories.
+        In a blockchain network, participants fall into two main roles:
+        operators who run the infrastructure and users who use it.
       </p>
+
+      <h2>Operators</h2>
       <p>
-        <strong>Operators</strong> run the blockchain software to earn fees.
-        They are the decentralized contributors who make the blockchain
-        functional and maintain its existence.
+        Operators run the blockchain software and form a P2P network.
+        They relay transactions, propagate blocks, and maintain consensus. In
+        return, they earn fees and sometimes new tokens. Without operators, the
+        chain would not exist.
       </p>
+
+      <h2>Users</h2>
       <p>
-        <strong>Users</strong> are the consumers who find value in interacting
-        with the blockchain for various purposes.
+        Users send transactions to the blockchain: transfers, smart contract
+        calls, and other actions. They connect to operators and pay fees for
+        inclusion. Users are the reason the blockchain has value.
       </p>
+
+      <h2>How they work together</h2>
       <p>
-        Operators maintain the blockchain and are rewarded financially for their
-        contributions. Users interact with the blockchain and pay fees for the
-        services it provides. Together, these two groups sustain the blockchain
-        ecosystem.
+        The diagram below shows the flow. Users submit transactions to operators,
+        who gossip them across the P2P mesh. One operator at a time produces a
+        block, packs transactions into it, and extends the chain.
       </p>
       <OperatorsUsersDemo />
     </div>

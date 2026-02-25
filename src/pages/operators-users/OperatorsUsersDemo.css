@@ -72,6 +72,19 @@
   text-anchor: middle;
 }
 
+.mesh-label-header,
+.user-label-header {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text);
+}
+
+.mesh-label-sub,
+.user-label-sub {
+  font-size: 10px;
+  fill: var(--text-muted);
+}
+
 .operators-users-legend {
   margin-top: 1rem;
   font-size: 0.85rem;
