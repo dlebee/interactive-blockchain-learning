@@ -22,6 +22,8 @@ import {
   TransactionInclusionPage,
   TransactionInclusionNoncePage,
   TransactionInclusionReplacingPage,
+  EthereumPage,
+  EthereumIntroductionPage,
 } from './pages'
 
 function App() {
@@ -50,6 +52,8 @@ function App() {
           <Route path="transaction-inclusion" element={<TransactionInclusionPage />} />
           <Route path="transaction-inclusion/nonce" element={<TransactionInclusionNoncePage />} />
           <Route path="transaction-inclusion/replacing" element={<TransactionInclusionReplacingPage />} />
+          <Route path="ethereum" element={<EthereumPage />} />
+          <Route path="ethereum/introduction" element={<EthereumIntroductionPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -67,4 +67,10 @@ export const navConfig: NavCategory[] = [
       },
     ],
   },
+  {
+    label: 'Ethereum',
+    items: [
+      { label: 'Introduction', path: 'ethereum/introduction' },
+    ],
+  },
 ]
