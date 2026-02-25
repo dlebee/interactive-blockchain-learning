@@ -1,0 +1,215 @@
+.mnemonic-creation-demo {
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 10px;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  overflow: hidden;
+}
+
+.mnemonic-demo-card {
+  min-height: 200px;
+  padding: 1.25rem 1.5rem;
+  background: rgba(51, 65, 85, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mnemonic-demo-title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.mnemonic-demo-hint {
+  margin: 0 0 1rem;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.mnemonic-words-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem 1rem;
+}
+
+.mnemonic-word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 13px;
+  color: rgba(148, 163, 184, 0.4);
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 6px;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+
+.mnemonic-word-visible {
+  color: #e2e8f0;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  animation: mnemonic-word-appear 0.3s ease-out;
+}
+
+@keyframes mnemonic-word-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mnemonic-word-num {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.mnemonic-word-visible .mnemonic-word-num {
+  color: rgba(6, 182, 212, 0.9);
+}
+
+/* Confirm phase */
+.mnemonic-confirm-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mnemonic-confirm-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  min-width: 140px;
+}
+
+.mnemonic-confirm-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.mnemonic-confirm-word {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.5);
+  transition: color 0.3s ease;
+}
+
+.mnemonic-confirm-word-done {
+  color: #86efac;
+  animation: mnemonic-confirm-pop 0.35s ease-out;
+}
+
+@keyframes mnemonic-confirm-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.mnemonic-confirm-check {
+  font-size: 16px;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.mnemonic-demo-progress {
+  margin: 0;
+  font-size: 12px;
+  color: #67e8f9;
+  font-weight: 500;
+}
+
+/* Safeguard phase */
+.mnemonic-safeguard-icon {
+  display: flex;
+  justify-content: center;
+  margin: 0.75rem 0 1rem;
+  color: #22c55e;
+  opacity: 0.9;
+}
+
+.mnemonic-safeguard-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+/* Phase indicator */
+.mnemonic-phase-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.mnemonic-phase-dots span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.5);
+  background: rgba(51, 65, 85, 0.5);
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+
+.mnemonic-phase-dots span.active {
+  color: #18181b;
+  background: #67e8f9;
+  border: 1px solid rgba(6, 182, 212, 0.5);
+}
+
+.mnemonic-phase-dots span.done {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.mnemonic-demo-caption {
+  margin: 0.75rem 0 0;
+  font-size: 12px;
+  text-align: center;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.mnemonic-demo-replay {
+  margin-top: 0.75rem;
+  padding: 0.45rem 1rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: #67e8f9;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mnemonic-demo-replay:hover {
+  background: rgba(6, 182, 212, 0.25);
+}

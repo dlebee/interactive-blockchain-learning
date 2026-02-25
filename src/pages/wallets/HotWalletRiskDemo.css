@@ -1,0 +1,22 @@
+.hot-wallet-risk-demo {
+  padding: 1.25rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 10px;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+}
+
+.hot-risk-svg {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.hot-risk-caption {
+  margin: 0.75rem 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(148, 163, 184, 0.9);
+}

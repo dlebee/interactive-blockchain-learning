@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './NodesFullPictureDemo.css'
 
-const NODES = 5
+const NODES = 6
 const BLOCK_W = 16
 const BLOCK_H = 20
 const BLOCK_GAP = 3
@@ -24,6 +24,7 @@ const CHAIN_CONFIGS: Array<
   { type: 'canonical' },
   { type: 'canonical' },
   { type: 'pending', label: 'A' },
+  { type: 'canonical' },
   { type: 'canonical' },
   { type: 'pending', label: 'B' },
 ]
@@ -91,15 +92,10 @@ export function NodesFullPictureDemo() {
         className="nodes-full-picture-svg"
         aria-label="Many nodes each keeping a copy of the blockchain, gossiping messages between them"
       >
-        {/* Message flows between nodes */}
+        {/* Message flows between nodes (mesh: ring + diagonals) */}
         {[
-          [0, 1],
-          [1, 2],
-          [2, 3],
-          [3, 4],
-          [4, 0],
-          [0, 2],
-          [1, 3],
+          [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0],
+          [0, 2], [1, 3], [2, 4], [3, 5], [4, 0], [5, 1],
         ].flatMap(([a, b], i) => {
           const p1 = positions[a]
           const p2 = positions[b]
@@ -124,11 +120,8 @@ export function NodesFullPictureDemo() {
 
         {/* Edges between nodes */}
         {[
-          [0, 1],
-          [1, 2],
-          [2, 3],
-          [3, 4],
-          [4, 0],
+          [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0],
+          [0, 2], [1, 3], [2, 4], [3, 5], [4, 0], [5, 1],
         ].map(([a, b]) => {
           const p1 = positions[a]
           const p2 = positions[b]

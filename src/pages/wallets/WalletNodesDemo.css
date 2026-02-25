@@ -1,0 +1,141 @@
+.wallet-nodes-demo {
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 10px;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  overflow: hidden;
+}
+
+.wallet-nodes-svg {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Connection lines */
+.wallet-nodes-svg .wallet-node-line {
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  fill: none;
+}
+
+.wallet-nodes-svg .wallet-node-line.chain-a {
+  stroke: rgba(6, 182, 212, 0.5);
+}
+
+.wallet-nodes-svg .wallet-node-line.chain-b {
+  stroke: rgba(249, 115, 22, 0.5);
+}
+
+/* Node mesh */
+.wallet-nodes-svg .node-mesh-line {
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.wallet-nodes-svg .node-mesh-line.chain-a {
+  stroke: rgba(6, 182, 212, 0.5);
+}
+
+.wallet-nodes-svg .node-mesh-line.chain-b {
+  stroke: rgba(249, 115, 22, 0.5);
+}
+
+.wallet-nodes-svg .node-outer.chain-a {
+  fill: rgba(6, 182, 212, 0.15);
+  stroke: #06b6d4;
+  stroke-width: 2;
+}
+
+.wallet-nodes-svg .node-inner.chain-a {
+  fill: #06b6d4;
+  opacity: 0.9;
+}
+
+.wallet-nodes-svg .node-outer.chain-b {
+  fill: rgba(249, 115, 22, 0.15);
+  stroke: #f97316;
+  stroke-width: 2;
+}
+
+.wallet-nodes-svg .node-inner.chain-b {
+  fill: #f97316;
+  opacity: 0.9;
+}
+
+/* Browser */
+.wallet-nodes-svg .browser-svg {
+  fill: rgba(30, 41, 59, 0.9);
+  stroke: rgba(148, 163, 184, 0.4);
+  stroke-width: 1;
+}
+
+.wallet-nodes-svg .browser-bar-svg {
+  fill: rgba(51, 65, 85, 0.7);
+}
+
+.wallet-nodes-svg .ext-svg {
+  fill: rgba(6, 182, 212, 0.2);
+  stroke: rgba(6, 182, 212, 0.5);
+  stroke-width: 1;
+}
+
+.wallet-nodes-svg .ext-label {
+  font-size: 9px;
+  font-weight: 600;
+  fill: #67e8f9;
+  text-anchor: middle;
+}
+
+.wallet-nodes-svg .browser-text {
+  font-size: 9px;
+  fill: rgba(148, 163, 184, 0.6);
+  text-anchor: middle;
+}
+
+/* Phone */
+.wallet-nodes-svg .phone-svg {
+  fill: rgba(51, 65, 85, 0.8);
+  stroke: rgba(148, 163, 184, 0.4);
+  stroke-width: 2;
+}
+
+.wallet-nodes-svg .phone-screen-svg {
+  fill: rgba(15, 23, 42, 0.9);
+}
+
+.wallet-nodes-svg .app-svg {
+  fill: rgba(6, 182, 212, 0.2);
+  stroke: rgba(6, 182, 212, 0.5);
+  stroke-width: 1;
+}
+
+.wallet-nodes-svg .app-text {
+  font-size: 8px;
+  fill: #67e8f9;
+  text-anchor: middle;
+  font-weight: 600;
+}
+
+.wallet-nodes-svg .wallet-label {
+  font-size: 10px;
+  fill: rgba(148, 163, 184, 0.9);
+  text-anchor: middle;
+}
+
+.wallet-nodes-svg .chain-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.wallet-nodes-svg .chain-label.chain-a {
+  fill: #67e8f9;
+}
+
+.wallet-nodes-svg .chain-label.chain-b {
+  fill: #fdba74;
+}

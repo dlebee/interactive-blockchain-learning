@@ -38,8 +38,9 @@ export function AccountPage() {
       <p>Click Next to walk through a signed message and what happens when it is tampered with.</p>
       <AsymmetricDemo />
       <p className="page-next-link">
-        Next: who runs the network?{' '}
-        <Link to="/operators-users">Operators & Users →</Link>
+        <Link to="/wallets">Wallets</Link>
+        {' · '}
+        <Link to="/operators-users">Operators & Users</Link>
       </p>
     </div>
   )

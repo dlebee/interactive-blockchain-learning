@@ -6,6 +6,9 @@ import {
   BlocksHashingPage,
   TransactionsPage,
   AccountPage,
+  WalletsPage,
+  WalletsMnemonicPage,
+  WalletsHotColdPage,
   OperatorsUsersPage,
   CryptocurrencyPage,
   NodesPage,
@@ -27,6 +30,9 @@ function App() {
           <Route path="blocks-hashing" element={<BlocksHashingPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="account" element={<AccountPage />} />
+          <Route path="wallets" element={<WalletsPage />} />
+          <Route path="wallets/mnemonic" element={<WalletsMnemonicPage />} />
+          <Route path="wallets/hot-cold" element={<WalletsHotColdPage />} />
           <Route path="operators-users" element={<OperatorsUsersPage />} />
           <Route path="cryptocurrency" element={<CryptocurrencyPage />} />
           <Route path="nodes" element={<NodesPage />} />

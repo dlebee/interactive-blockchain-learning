@@ -43,6 +43,14 @@ export const navConfig: NavCategory[] = [
           { label: 'Replacing / cancelling', path: 'transaction-inclusion/replacing' },
         ],
       },
+      {
+        label: 'Wallets',
+        path: 'wallets',
+        children: [
+          { label: 'Mnemonic & derivation', path: 'wallets/mnemonic' },
+          { label: 'Hot vs cold', path: 'wallets/hot-cold' },
+        ],
+      },
     ],
   },
 ]

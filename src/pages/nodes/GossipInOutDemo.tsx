@@ -3,11 +3,11 @@ import './GossipInOutDemo.css'
 
 // Directed edges: from -> to. Node i has out-peers and in-peers.
 const EDGES: [number, number][] = [
-  [0, 1], [0, 2], [1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 0], [4, 0],
+  [0, 1], [0, 2], [1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 0], [5, 0], [5, 1],
 ]
 
-const NODES = 5
-const LABELS = ['A', 'B', 'C', 'D', 'E']
+const NODES = 6
+const LABELS = ['A', 'B', 'C', 'D', 'E', 'F']
 const RADIUS = 140
 const CENTER_X = 300
 const CENTER_Y = 180
