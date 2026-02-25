@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { ConsensusSlotDemo } from './ConsensusSlotDemo'
 import { ConsensusWhoDemo } from './ConsensusWhoDemo'
+import { ConsensusVerifyDemo } from './ConsensusVerifyDemo'
+import { ConsensusForkDemo } from './ConsensusForkDemo'
 import { ConsensusLongestChainDemo } from './ConsensusLongestChainDemo'
 
 export function ConsensusPage() {
@@ -45,6 +47,33 @@ export function ConsensusPage() {
       </p>
       <ConsensusWhoDemo />
 
+      <h2 id="all-nodes-verify">
+        <a href="#all-nodes-verify" className="anchor-link" aria-label="Link to this section">
+          All nodes verify and agree
+        </a>
+      </h2>
+      <p>
+        In all consensus mechanisms, whether PoW, PoS, NPoS, or others, every node has the same
+        job when a block is proposed: execute all transactions in the block and verify the
+        block hash. Nodes that do not author blocks still receive proposed blocks, execute the
+        transactions themselves, and must come to agreement with the author&apos;s claimed hash.
+        If the computed hash matches, the block is accepted; if not, it is rejected.
+      </p>
+      <ConsensusVerifyDemo />
+
+      <h2 id="forks">
+        <a href="#forks" className="anchor-link" aria-label="Link to this section">
+          Forks
+        </a>
+      </h2>
+      <p>
+        A <strong>fork</strong> occurs when there are disagreements between nodes, or when multiple
+        valid extensions of the chain exist. For example, two different blocks might both extend
+        the same parent block. Nodes may see or build on different branches until the protocol
+        converges on one (e.g. via the longest chain rule).
+      </p>
+      <ConsensusForkDemo />
+
       <h2 id="longest-chain-rule">
         <a href="#longest-chain-rule" className="anchor-link" aria-label="Link to this section">
           Longest chain rule
@@ -66,9 +95,10 @@ export function ConsensusPage() {
         </a>
       </h2>
       <p>
-        Consensus is a deep topic. This page introduced slots, block time, and
-        the distinction between leaderless and leader based designs. Sub pages
-        cover specific mechanisms in more detail.
+        Consensus is a deep topic. This page introduced slots, block time, the
+        distinction between leaderless and leader based designs, and the fact that
+        all nodes verify blocks regardless of who authors them. Sub pages cover
+        specific mechanisms (PoW, PoS, NPoS, etc.) in more detail.
       </p>
       <ul>
         <li><Link to="/consensus/proof-of-work">Proof of Work</Link></li>
