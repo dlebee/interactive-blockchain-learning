@@ -1,0 +1,114 @@
+.pow-hash-puzzle-demo {
+  padding: 1.25rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 10px;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+
+.pow-gpu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.pow-gpu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem;
+  background: rgba(51, 65, 85, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  transition: all 0.3s ease;
+}
+
+.pow-gpu-card:hover {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.15);
+}
+
+.pow-gpu-icon {
+  width: 50px;
+  height: 40px;
+}
+
+.pow-gpu-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pow-gpu-core {
+  animation: pow-gpu-pulse 0.8s ease-in-out infinite;
+}
+
+.pow-gpu-card:nth-child(1) .pow-gpu-core { animation-delay: 0s; }
+.pow-gpu-card:nth-child(2) .pow-gpu-core { animation-delay: 0.1s; }
+.pow-gpu-card:nth-child(3) .pow-gpu-core { animation-delay: 0.2s; }
+.pow-gpu-card:nth-child(4) .pow-gpu-core { animation-delay: 0.05s; }
+.pow-gpu-card:nth-child(5) .pow-gpu-core { animation-delay: 0.15s; }
+.pow-gpu-card:nth-child(6) .pow-gpu-core { animation-delay: 0.25s; }
+.pow-gpu-card:nth-child(7) .pow-gpu-core { animation-delay: 0.08s; }
+.pow-gpu-card:nth-child(8) .pow-gpu-core { animation-delay: 0.18s; }
+
+@keyframes pow-gpu-pulse {
+  0%, 100% { opacity: 0.5; fill: rgba(6, 182, 212, 0.4); }
+  50% { opacity: 1; fill: rgba(6, 182, 212, 0.9); }
+}
+
+.pow-gpu-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.pow-gpu-hash {
+  font-size: 9px;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.pow-target-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.75rem;
+  background: rgba(51, 65, 85, 0.5);
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.pow-target-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.pow-target-hash {
+  font-size: 13px;
+  padding: 0.2rem 0.5rem;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 4px;
+  color: #86efac;
+}
+
+.pow-target-hint {
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.pow-hash-caption {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+@media (max-width: 520px) {
+  .pow-gpu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

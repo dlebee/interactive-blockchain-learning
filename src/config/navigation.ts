@@ -33,7 +33,11 @@ export const navConfig: NavCategory[] = [
         path: 'nodes',
         children: [{ label: 'Gossip', path: 'nodes/gossip' }],
       },
-      { label: 'Consensus', path: 'consensus' },
+      {
+        label: 'Consensus',
+        path: 'consensus',
+        children: [{ label: 'Proof of Work', path: 'consensus/proof-of-work' }],
+      },
       { label: 'Blockspace', path: 'blockspace' },
       {
         label: 'Transaction Inclusion',

@@ -60,23 +60,26 @@ export function ConsensusPage() {
       </p>
       <ConsensusLongestChainDemo />
 
-      <h2 id="more-to-come">
-        <a href="#more-to-come" className="anchor-link" aria-label="Link to this section">
-          More to come
+      <h2 id="consensus-mechanisms">
+        <a href="#consensus-mechanisms" className="anchor-link" aria-label="Link to this section">
+          Consensus mechanisms
         </a>
       </h2>
       <p>
         Consensus is a deep topic. This page introduced slots, block time, and
-        the distinction between leaderless and leader based designs. Sub sections
-        will cover specific mechanisms in more detail.
+        the distinction between leaderless and leader based designs. Sub pages
+        cover specific mechanisms in more detail.
       </p>
+      <ul>
+        <li><Link to="/consensus/proof-of-work">Proof of Work</Link></li>
+      </ul>
 
       <p className="page-next-link">
+        <Link to="/consensus/proof-of-work">Proof of Work</Link>
+        {' · '}
         <Link to="/nodes">Nodes</Link>
         {' · '}
         <Link to="/blockspace">Blockspace</Link>
-        {' · '}
-        <Link to="/operators-users">Operators & Users</Link>
       </p>
     </div>
   )

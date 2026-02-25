@@ -208,7 +208,7 @@ export function AsymmetricDemo() {
                 >
                   <strong>ECDSA</strong>
                 </a>
-                {' — Ethereum'}
+                {' · Ethereum'}
               </li>
               <li>
                 <a
@@ -218,7 +218,7 @@ export function AsymmetricDemo() {
                 >
                   <strong>SR25519</strong>
                 </a>
-                {' — Polkadot ecosystem'}
+                {' · Polkadot ecosystem'}
               </li>
               <li>
                 <a
@@ -228,7 +228,7 @@ export function AsymmetricDemo() {
                 >
                   <strong>ED25519</strong>
                 </a>
-                {' — Peer to peer'}
+                {' · Peer to peer'}
               </li>
             </ul>
           </div>

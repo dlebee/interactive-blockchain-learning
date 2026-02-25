@@ -62,8 +62,8 @@ export function WalletsHotColdPage() {
       </p>
 
       <p>
-        The risk: if the software <em>before</em> the cold wallet—the dapp, bridge, or wallet
-        app—is hacked or compromised, it can send a different transaction than you expect.
+        The risk: if the software <em>before</em> the cold wallet (the dapp, bridge, or wallet
+        app) is hacked or compromised, it can send a different transaction than you expect.
         You might think you are approving a swap, but you could be signing a transfer of all
         your funds to an attacker. In that case, your private key stays safe and is never
         leaked, but your funds can still be stolen. Blind signing shifts trust to the

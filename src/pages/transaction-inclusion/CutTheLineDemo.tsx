@@ -147,7 +147,7 @@ export function CutTheLineDemo() {
                           </span>
                         </span>
                       ) : (
-                        <span className="cut-slot-empty">—</span>
+                        <span className="cut-slot-empty">-</span>
                       )}
                     </div>
                   ))}
