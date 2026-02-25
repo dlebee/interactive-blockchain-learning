@@ -102,10 +102,13 @@ export function ConsensusPage() {
       </p>
       <ul>
         <li><Link to="/consensus/proof-of-work">Proof of Work</Link></li>
+        <li><Link to="/consensus/proof-of-stake">Proof of Stake</Link></li>
       </ul>
 
       <p className="page-next-link">
         <Link to="/consensus/proof-of-work">Proof of Work</Link>
+        {' · '}
+        <Link to="/consensus/proof-of-stake">Proof of Stake</Link>
         {' · '}
         <Link to="/nodes">Nodes</Link>
         {' · '}

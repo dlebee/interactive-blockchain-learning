@@ -1,0 +1,176 @@
+.pos-finality-demo {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.pos-finality-subtitle {
+  margin: 0 0 1rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e2e8f0;
+  text-align: center;
+}
+
+/* Ethereum demo */
+.pos-finality-ethereum .pos-finality-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.8);
+  margin-bottom: 0.75rem;
+}
+
+.pos-finality-chain-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 3px;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.pos-finality-block-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.pos-finality-block {
+  width: 18px;
+  height: 22px;
+  padding: 1px 2px;
+  border-radius: 3px;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  background: rgba(51, 65, 85, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: rgba(148, 163, 184, 0.9);
+  transition: all 0.2s ease;
+}
+
+.pos-finality-block .pos-block-author {
+  font-weight: 700;
+  color: #fdba74;
+  line-height: 1;
+}
+
+.pos-finality-block .pos-block-votes {
+  font-size: 6px;
+  color: #86efac;
+  line-height: 1;
+}
+
+.pos-finality-block.latest {
+  border-color: rgba(6, 182, 212, 0.8);
+  background: rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+}
+
+.pos-finality-label {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.pos-finality-label.safe {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.pos-finality-label.final {
+  color: #67e8f9;
+  background: rgba(6, 182, 212, 0.2);
+}
+
+.pos-epoch-row {
+  flex-basis: 100%;
+  width: 100%;
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.7);
+  margin: 0.5rem 0 0.2rem 0;
+  padding-left: 2px;
+}
+
+.pos-epoch-row:first-child {
+  margin-top: 0;
+}
+
+/* NPoS demo */
+.pos-npos-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pos-npos-section-label {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.8);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.pos-npos-authorship,
+.pos-npos-votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pos-npos-blocks {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pos-npos-block {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  background: rgba(51, 65, 85, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.5);
+  transition: all 0.3s ease;
+}
+
+.pos-npos-block.filled {
+  background: rgba(249, 115, 22, 0.2);
+  border-color: rgba(249, 115, 22, 0.6);
+  color: #fdba74;
+}
+
+.pos-npos-block.latest {
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+}
+
+.pos-npos-block.voting {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.5);
+  color: #67e8f9;
+}
+
+.pos-npos-block.finalized {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.6);
+  color: #86efac;
+}
+
+.pos-npos-author-hint,
+.pos-npos-vote-hint {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.7);
+  margin-top: 0.35rem;
+}

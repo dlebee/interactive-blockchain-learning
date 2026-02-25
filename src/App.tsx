@@ -15,6 +15,7 @@ import {
   NodesGossipPage,
   ConsensusPage,
   ConsensusProofOfWorkPage,
+  ConsensusProofOfStakePage,
   BlockspacePage,
   TransactionInclusionPage,
   TransactionInclusionNoncePage,
@@ -40,6 +41,7 @@ function App() {
           <Route path="nodes/gossip" element={<NodesGossipPage />} />
           <Route path="consensus" element={<ConsensusPage />} />
           <Route path="consensus/proof-of-work" element={<ConsensusProofOfWorkPage />} />
+          <Route path="consensus/proof-of-stake" element={<ConsensusProofOfStakePage />} />
           <Route path="blockspace" element={<BlockspacePage />} />
           <Route path="transaction-inclusion" element={<TransactionInclusionPage />} />
           <Route path="transaction-inclusion/nonce" element={<TransactionInclusionNoncePage />} />

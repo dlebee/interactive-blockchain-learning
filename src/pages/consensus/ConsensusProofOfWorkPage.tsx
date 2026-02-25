@@ -112,6 +112,8 @@ export function ConsensusProofOfWorkPage() {
       <p className="page-next-link">
         <Link to="/consensus">Back to Consensus</Link>
         {' · '}
+        <Link to="/consensus/proof-of-stake">Proof of Stake</Link>
+        {' · '}
         <Link to="/blockspace">Blockspace</Link>
       </p>
     </div>
