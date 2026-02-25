@@ -57,7 +57,7 @@ export function GossipInOutDemo() {
           </defs>
 
           {/* Edges: color by role when a node is focused */}
-          {EDGES.map(([from, to], i) => {
+          {EDGES.map(([from, to]) => {
             const p1 = positions[from]
             const p2 = positions[to]
             const dx = p2.x - p1.x
