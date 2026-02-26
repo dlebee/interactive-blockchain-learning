@@ -296,3 +296,65 @@
   background: rgba(6, 182, 212, 0.25);
   border-color: rgba(6, 182, 212, 0.6);
 }
+
+/* Interactive IMT demo: historical roots panel below tree */
+.imt-interactive-demo {
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+.imt-historical-panel {
+  margin-top: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 8px;
+}
+
+.imt-historical-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(167, 139, 250, 0.95);
+  margin-bottom: 0.5rem;
+}
+
+.imt-historical-roots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.imt-root-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 12px;
+  font-family: ui-monospace, monospace;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 6px;
+  color: rgba(226, 232, 240, 0.95);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.imt-root-btn:hover {
+  background: rgba(139, 92, 246, 0.22);
+  border-color: rgba(139, 92, 246, 0.6);
+}
+
+.imt-root-btn.selected {
+  background: rgba(139, 92, 246, 0.28);
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
+}
+
+.imt-root-btn-label {
+  font-weight: 600;
+  color: #a78bfa;
+}
+
+.imt-root-btn-hash {
+  color: rgba(203, 213, 225, 0.9);
+}
