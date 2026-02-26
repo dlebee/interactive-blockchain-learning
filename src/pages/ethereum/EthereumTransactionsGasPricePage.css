@@ -1,0 +1,42 @@
+.gas-price-code-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+.gas-price-code-row > div {
+  flex: 1;
+  min-width: 200px;
+}
+
+.gas-price-code-block .gas-price-code-label {
+  margin-bottom: 0.5rem;
+}
+
+.gas-price-code-block pre {
+  overflow-x: auto;
+}
+
+/* LaTeX math blocks */
+.gas-price-math {
+  margin: 0.5rem 0 1rem;
+}
+
+.gas-price-math .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.gas-price-math .katex {
+  font-size: 1.05em;
+}
+
+.gas-price-code-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.9);
+  margin-bottom: 0.35rem;
+}
+
