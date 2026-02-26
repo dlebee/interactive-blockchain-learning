@@ -33,6 +33,13 @@ export function MerkleTreesPage() {
         not need the full tree or the other items. Anyone with the Merkle root can
         verify the proof in logarithmic time.
       </p>
+      <p>
+        What matters is that the content of each leaf is <strong>unique</strong> and
+        the leaves are <strong>deterministically sorted</strong>. Then the root hash
+        is a compact, verifiable summary of the whole set: change one leaf or the order,
+        and the root changes. That makes Merkle trees a powerful way to summarize
+        information.
+      </p>
 
       <MerkleTreeDemo />
 
@@ -54,6 +61,47 @@ export function MerkleTreesPage() {
         changes, the root changes, and the block hash changes.
       </p>
 
+      <h2 id="variants">
+        <a href="#variants" className="anchor-link" aria-label="Link to this section">
+          Variants
+        </a>
+      </h2>
+      <p>
+        There are many variants of Merkle trees, each tuned for different use cases:
+      </p>
+      <ul>
+        <li>
+          <strong>Patricia Merkle Trie (Merkle Patricia Trie)</strong>: Combines a
+          Merkle tree with a Patricia trie for key-value storage with efficient
+          lookups and updates. Ethereum uses it for state, storage, transactions, and
+          receipts.{" "}
+          <a href="https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/" target="_blank" rel="noopener noreferrer">
+            Ethereum: Patricia Merkle Trie
+          </a>
+        </li>
+        <li>
+          <strong>Verkle trees</strong>: Use vector commitments (e.g. KZG) instead of
+          hashes so proofs are much smaller. Ethereum is moving state to a Verkle tree
+          to enable stateless clients.{" "}
+          <a href="https://eips.ethereum.org/EIPS/eip-6800" target="_blank" rel="noopener noreferrer">
+            EIP-6800: Ethereum state using a unified verkle tree
+          </a>
+        </li>
+        <li>
+          <strong>Incremental Merkle trees</strong>: Append-only trees that keep only
+          O(log n) data and support efficient inclusion proofs as new leaves are added.
+          Used in Zcash, Tornado Cash-style systems, Semaphore, and the Ethereum
+          beacon chain validator set.{" "}
+          <a href="https://github.com/zcash/incrementalmerkletree" target="_blank" rel="noopener noreferrer">
+            Zcash incremental Merkle tree
+          </a>
+          {" · "}
+          <a href="https://www.npmjs.com/package/@zk-kit/incremental-merkle-tree.sol" target="_blank" rel="noopener noreferrer">
+            zk-kit incremental Merkle tree (Solidity)
+          </a>
+        </li>
+      </ul>
+
       <h2 id="common-uses">
         <a href="#common-uses" className="anchor-link" aria-label="Link to this section">
           Common uses
@@ -67,6 +115,16 @@ export function MerkleTreesPage() {
         <li>
           <strong>State roots</strong>: Ethereum uses a Merkle Patricia trie for account
           state; the state root is in the block header.
+        </li>
+        <li>
+          <strong>Block authorship</strong>: Merkle roots in the block header tie
+          transactions and state to the block; any change changes the root and the
+          block hash.
+        </li>
+        <li>
+          <strong>Cross chain protocols</strong>: Message passing and other cross chain
+          schemes use Merkle trees to prove inclusion of messages or state on another
+          chain.
         </li>
         <li>
           <strong>SPV proofs</strong>: Simplified Payment Verification allows lightweight
