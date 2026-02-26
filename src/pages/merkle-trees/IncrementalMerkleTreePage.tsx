@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { IncrementalMerkleTreeDemo } from './IncrementalMerkleTreeDemo'
+import { IncrementalMerkleTreeRaceDemo } from './IncrementalMerkleTreeRaceDemo'
 
 export function IncrementalMerkleTreePage() {
   return (
@@ -36,6 +37,8 @@ export function IncrementalMerkleTreePage() {
         frontier along the right edge) so inserts and proofs stay efficient.
       </p>
 
+      <IncrementalMerkleTreeDemo />
+
       <h2 id="main-benefit">
         <a href="#main-benefit" className="anchor-link" aria-label="Link to this section">
           Main benefit: historical roots
@@ -51,7 +54,7 @@ export function IncrementalMerkleTreePage() {
         single latest root, which is important for UX (e.g. withdraw anytime).
       </p>
 
-      <IncrementalMerkleTreeDemo />
+      <IncrementalMerkleTreeRaceDemo />
 
       <h2 id="common-uses">
         <a href="#common-uses" className="anchor-link" aria-label="Link to this section">
