@@ -48,7 +48,7 @@ export function IncrementalMerkleTreePage() {
         then proofs against any of those roots remain valid. So multiple people can
         submit Merkle proofs with an older root that is still accepted. That lets users
         prove membership at the time they committed, without requiring everyone to use the
-        single latest root, which is important for privacy and UX (e.g. withdraw anytime).
+        single latest root, which is important for UX (e.g. withdraw anytime).
       </p>
 
       <IncrementalMerkleTreeDemo />
