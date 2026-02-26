@@ -133,12 +133,12 @@ export function NodesEcosystemDemo() {
           )
         })}
 
-        {/* Explorer flow: Dedicated RPC to P2P */}
+        {/* Explorer flow: P2P to Dedicated RPC (Explorer pulls data from P2P) */}
         <line
-          x1={DEDICATED_RPC.x}
-          y1={DEDICATED_RPC.y}
-          x2={CENTER_X + P2P_RADIUS * 0.6}
-          y2={CENTER_Y - P2P_RADIUS * 0.5}
+          x1={CENTER_X + P2P_RADIUS * 0.6}
+          y1={CENTER_Y - P2P_RADIUS * 0.5}
+          x2={DEDICATED_RPC.x}
+          y2={DEDICATED_RPC.y}
           className="ecosystem-dedicated-p2p-edge"
         />
         {/* Dedicated RPC to Explorer */}
@@ -248,19 +248,19 @@ export function NodesEcosystemDemo() {
           ))
         })}
 
-        {/* Explorer flow: Dedicated RPC to P2P (gossip, same as other RPC) */}
+        {/* Explorer flow: P2P to Dedicated RPC (data flows from P2P to Explorer) */}
         {[0, 0.8, 1.6].map((offset, j) => (
           <circle key={`dedicated-p2p-${j}`} r="2" fill="#22c55e" opacity="0.6">
             <animateMotion
               dur="2.2s"
               repeatCount="indefinite"
               begin={`${offset}s`}
-              path={`M ${DEDICATED_RPC.x} ${DEDICATED_RPC.y} L ${CENTER_X + P2P_RADIUS * 0.6} ${CENTER_Y - P2P_RADIUS * 0.5}`}
+              path={`M ${CENTER_X + P2P_RADIUS * 0.6} ${CENTER_Y - P2P_RADIUS * 0.5} L ${DEDICATED_RPC.x} ${DEDICATED_RPC.y}`}
             />
           </circle>
         ))}
 
-        {/* Explorer flow: Dedicated RPC to Explorer to Web */}
+        {/* Explorer flow: P2P → Dedicated RPC → Explorer → Web (data pulled to users) */}
         {[0, 1.2].map((offset, j) => (
           <circle key={`explorer-flow-${j}`} r="3" fill="#8b5cf6" opacity="0.85">
             <animateMotion
