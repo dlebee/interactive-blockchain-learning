@@ -68,6 +68,11 @@ export const navConfig: NavCategory[] = [
           { label: 'Hot vs cold', path: 'wallets/hot-cold' },
         ],
       },
+      {
+        label: 'Advanced Topics',
+        path: 'advanced-topics',
+        children: [{ label: 'Merkle Trees', path: 'advanced-topics/merkle-trees' }],
+      },
     ],
   },
   {

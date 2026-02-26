@@ -1,6 +1,8 @@
 export { HomePage } from './home/HomePage'
+export { NotFoundPage } from './NotFoundPage'
 export { WhatIsBlockchainPage } from './what-is-blockchain/WhatIsBlockchainPage'
 export { BlocksHashingPage } from './blocks-hashing/BlocksHashingPage'
+export { MerkleTreesPage } from './merkle-trees/MerkleTreesPage'
 export { TransactionsPage } from './transactions/TransactionsPage'
 export { AccountPage } from './account/AccountPage'
 export { WalletsPage } from './wallets/WalletsPage'

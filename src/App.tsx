@@ -2,8 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import {
   HomePage,
+  NotFoundPage,
   WhatIsBlockchainPage,
   BlocksHashingPage,
+  MerkleTreesPage,
   TransactionsPage,
   AccountPage,
   WalletsPage,
@@ -40,6 +42,8 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="what-is-blockchain" element={<WhatIsBlockchainPage />} />
           <Route path="blocks-hashing" element={<BlocksHashingPage />} />
+          <Route path="advanced-topics" element={<Navigate to="/advanced-topics/merkle-trees" replace />} />
+          <Route path="advanced-topics/merkle-trees" element={<MerkleTreesPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="wallets" element={<WalletsPage />} />
@@ -67,6 +71,7 @@ function App() {
           <Route path="ethereum/transactions/logs" element={<EthereumTransactionsLogsPage />} />
           <Route path="ethereum/transactions/gas" element={<EthereumTransactionsGasPage />} />
           <Route path="ethereum/transactions/gas-price" element={<EthereumTransactionsGasPricePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

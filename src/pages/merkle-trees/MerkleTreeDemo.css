@@ -1,0 +1,349 @@
+.merkle-tree-demo {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.merkle-tree-controls {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.merkle-add-btn {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  color: #22c55e;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.merkle-add-btn:hover {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+.merkle-reset-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.merkle-reset-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.merkle-tree-hint {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Side by side layout */
+.merkle-tree-pair {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.merkle-main-svg {
+  flex: 3;
+  min-width: 0;
+}
+
+.merkle-proof-svg {
+  flex: 3;
+  min-width: 0;
+}
+
+.merkle-proof-array-panel {
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 1rem;
+}
+
+.merkle-proof-placeholder {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Proof array: colored boxes, hash at current step on the right */
+.merkle-proof-visual-array {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.merkle-proof-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.merkle-proof-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, monospace;
+}
+
+.merkle-proof-box-root {
+  background: rgba(139, 92, 246, 0.25);
+  border: 1.5px solid #8b5cf6;
+  color: #fff;
+}
+
+.merkle-proof-box-sibling {
+  background: rgba(6, 182, 212, 0.25);
+  border: 1.5px solid #06b6d4;
+  color: #fff;
+}
+
+.merkle-proof-box-sibling.merkle-proof-box-zero {
+  background: rgba(6, 182, 212, 0.35);
+  border: 1.5px solid #06b6d4;
+  color: #fff;
+}
+
+.merkle-proof-box-start {
+  background: rgba(245, 158, 11, 0.35);
+  border: 1.5px solid var(--accent);
+  color: #fff;
+}
+
+.merkle-proof-box-ref {
+  background: rgba(239, 68, 68, 0.35);
+  border: 1.5px solid #ef4444;
+  color: #fff;
+}
+
+/* Same style as padded leaves (zero nodes) in the Merkle tree: full gray panel */
+.merkle-proof-box-noop {
+  background: rgba(107, 114, 128, 0.28);
+  border: 1.5px solid rgba(107, 114, 128, 0.6);
+  color: rgba(255, 255, 255, 0.9);
+  min-width: 4.5rem;
+}
+
+/* Hash on the right: root, ref, and iteration result aligned */
+.merkle-proof-hash-right {
+  margin-left: auto;
+  min-width: 4.5rem;
+  text-align: right;
+}
+
+.merkle-proof-box.merkle-proof-hash-right {
+  justify-content: flex-end;
+}
+
+.merkle-proof-hash.merkle-proof-result {
+  margin-left: auto;
+  min-width: 4.5rem;
+  text-align: right;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  background: rgba(245, 158, 11, 0.25);
+  border: 1px solid var(--accent);
+  color: #fcd34d;
+}
+
+.merkle-proof-hash {
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.merkle-proof-hash.merkle-proof-current {
+  margin-left: auto;
+}
+
+.merkle-tree-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Edges */
+.merkle-tree-demo .merkle-edge {
+  stroke: rgba(6, 182, 212, 0.5);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+/* Nodes */
+.merkle-tree-demo .merkle-node {
+  fill: rgba(34, 197, 94, 0.12);
+  stroke: rgba(34, 197, 94, 0.45);
+  stroke-width: 1.5;
+  transition: fill 0.15s, stroke 0.15s;
+}
+
+.merkle-tree-demo .merkle-node:hover {
+  fill: rgba(34, 197, 94, 0.22);
+  stroke: #22c55e;
+}
+
+.merkle-tree-demo .merkle-node-ref {
+  fill: rgba(239, 68, 68, 0.22);
+  stroke: #ef4444;
+  stroke-width: 2;
+}
+
+.merkle-tree-demo .merkle-node-selected {
+  fill: rgba(245, 158, 11, 0.22);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.merkle-tree-demo .merkle-node-proof {
+  fill: rgba(6, 182, 212, 0.18);
+  stroke: #06b6d4;
+  stroke-width: 1.5;
+}
+
+.merkle-tree-demo .merkle-node-zero {
+  fill: rgba(107, 114, 128, 0.22);
+  stroke: rgba(107, 114, 128, 0.55);
+}
+
+.merkle-tree-demo .merkle-node-zero:hover {
+  fill: rgba(107, 114, 128, 0.3);
+}
+
+.merkle-tree-demo .merkle-node-root {
+  fill: rgba(139, 92, 246, 0.2);
+  stroke: #8b5cf6;
+  stroke-width: 2;
+}
+
+.merkle-node-label {
+  font-size: 10px;
+  fill: var(--text);
+  font-family: ui-monospace, monospace;
+  pointer-events: none;
+}
+
+.merkle-empty-label {
+  font-size: 13px;
+  fill: var(--text-muted);
+}
+
+/* Proof panel legend */
+.merkle-proof-legend {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.merkle-proof-legend-title {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.merkle-proof-legend-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  line-height: 1.7;
+}
+
+.merkle-legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.merkle-legend-swatch.merkle-legend-root {
+  background: rgba(139, 92, 246, 0.5);
+  border-color: #8b5cf6;
+}
+
+.merkle-legend-swatch.merkle-legend-ref {
+  background: rgba(239, 68, 68, 0.5);
+  border-color: #ef4444;
+}
+
+.merkle-legend-swatch.merkle-legend-sibling {
+  background: rgba(6, 182, 212, 0.4);
+  border-color: #06b6d4;
+}
+
+.merkle-legend-swatch.merkle-legend-result {
+  background: rgba(245, 158, 11, 0.4);
+  border-color: var(--accent);
+}
+
+.merkle-legend-swatch.merkle-legend-noop {
+  background: rgba(107, 114, 128, 0.4);
+  border-color: #6b7280;
+}
+
+.merkle-tree-demo .merkle-legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+  vertical-align: middle;
+}
+
+.merkle-tree-demo .merkle-legend-dot.selected {
+  background: var(--accent);
+}
+
+.merkle-tree-demo .merkle-legend-dot.proof {
+  background: #06b6d4;
+}
+
+.merkle-tree-demo .merkle-legend-dot.zero {
+  background: #6b7280;
+}
+
+.merkle-tree-demo .merkle-legend-dot.root {
+  background: #8b5cf6;
+}
+
+/* Proof panel: arrows and direction label */
+.merkle-tree-demo .merkle-proof-arrow {
+  stroke: rgba(34, 197, 94, 0.5);
+  stroke-width: 2;
+  fill: none;
+}
+
+.merkle-tree-demo .merkle-proof-arrow-head {
+  fill: rgba(34, 197, 94, 0.6);
+  stroke: none;
+}
+
+.merkle-tree-demo .merkle-proof-direction {
+  font-size: 9px;
+  fill: var(--text-muted);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}

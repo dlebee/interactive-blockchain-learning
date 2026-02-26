@@ -27,7 +27,8 @@ export function BlocksHashingPage() {
       <p>Try it yourself. Build a chain, then edit any block and watch the digests update.</p>
       <BlockChainDemo />
       <p>
-        See how blocks hold and verify transactions in{' '}
+        Blocks often use <Link to="/advanced-topics/merkle-trees">Merkle trees</Link> to represent
+        transactions efficiently. See how blocks hold and verify transactions in{' '}
         <Link to="/transactions">Transactions →</Link>
       </p>
     </div>
