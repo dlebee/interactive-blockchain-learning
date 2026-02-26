@@ -6,13 +6,13 @@ import './EthereumTransactionsGasPage.css'
 
 const ETHERS_ESTIMATE_SAMPLE = `const contract = new ethers.Contract(address, abi, signer);
 
-// Estimate gas for the call
+/* Estimate gas for the call */
 const estimatedGas = await contract.transfer.estimateGas(to, amount);
 
-// Add 35% buffer
+/* Add 35% buffer */
 const gasLimit = (estimatedGas * 135n) / 100n;
 
-// Send with buffered gas limit
+/* Send with buffered gas limit */
 const tx = await contract.transfer(to, amount, { gasLimit });
 await tx.wait();`
 
@@ -179,6 +179,105 @@ export function EthereumTransactionsGasPage() {
           </p>
         </blockquote>
       </figure>
+
+      <h2 id="block-gas-limit">
+        <a href="#block-gas-limit" className="anchor-link" aria-label="Link to this section">
+          Block gas limit
+        </a>
+      </h2>
+      <p>
+        Every block has a <strong>block gas limit</strong>. This caps how much
+        total processing can occur in a single block. The sum of all transaction
+        gas limits in that block cannot exceed it. That keeps block production
+        predictable and prevents blocks from growing unbounded. See{' '}
+        <Link to="/blockspace">blockspace</Link> for why protocols cap size and
+        time.
+      </p>
+      <p>
+        Some blockchains add a <strong>transaction max gas limit</strong> on top
+        of the block limit. That ensures a single transaction cannot take the
+        whole block. Without it, one large tx could fill a block and crowd out
+        others. It also prepares for parallel execution: a capped gas limit per
+        tx forces bounded work per transaction, which lets you partition the
+        block and run transactions in parallel. See{' '}
+        <a
+          href="https://eips.ethereum.org/EIPS/eip-7825"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          EIP-7825
+        </a>
+        ,{' '}
+        <a
+          href="https://blog.ethereum.org/2025/10/21/fusaka-gascap-update"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Fusaka update
+        </a>
+        , the{' '}
+        <a
+          href="https://archive.devcon.org/archive/watch/6/challenges-of-parallelizability-under-ethereums-execution-model/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Devcon talk on parallelizability
+        </a>
+        , and{' '}
+        <a
+          href="https://docs.zksync.io/zksync-protocol/evm-interpreter/evm-gas-interpretation"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          zkSync EVM gas interpretation
+        </a>
+        .
+      </p>
+      <p>
+        Different chains choose different block gas limits. Higher limits allow
+        more transactions per block but increase validation load and propagation
+        time. Lower limits keep blocks smaller and faster to validate.
+      </p>
+      <p>
+        <strong>Ethereum mainnet</strong> (Fusaka) and <strong>Base</strong> both
+        enforce a per-transaction gas limit. Others rely only on the block limit
+        for now.
+      </p>
+      <table className="gas-table">
+        <thead>
+          <tr>
+            <th>Chain</th>
+            <th>Block gas limit (approx.)</th>
+            <th>Per-tx gas limit (approx.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ethereum Mainnet</td>
+            <td>60M</td>
+            <td>~16.78M</td>
+          </tr>
+          <tr>
+            <td>Creditcoin</td>
+            <td>75M</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>BNB Smart Chain (BSC)</td>
+            <td>~140M</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Base</td>
+            <td>300M</td>
+            <td>25M</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        These values can change over time; validators and governance may adjust
+        limits based on network conditions and upgrades.
+      </p>
 
       <p className="page-next-link">
         <Link to="/ethereum/transactions">← Transactions</Link>
