@@ -21,3 +21,8 @@ export { TransactionInclusionNoncePage } from './transaction-inclusion/Transacti
 export { TransactionInclusionReplacingPage } from './transaction-inclusion/TransactionInclusionReplacingPage'
 export { EthereumIntroductionPage } from './ethereum/EthereumIntroductionPage'
 export { EthereumTransactionsPage } from './ethereum/EthereumTransactionsPage'
+export { EthereumTransactionsAbiPage } from './ethereum/EthereumTransactionsAbiPage'
+export { EthereumTransactionsCalldataPage } from './ethereum/EthereumTransactionsCalldataPage'
+export { EthereumTransactionsLogsPage } from './ethereum/EthereumTransactionsLogsPage'
+export { EthereumTransactionsGasPage } from './ethereum/EthereumTransactionsGasPage'
+export { EthereumTransactionsGasPricePage } from './ethereum/EthereumTransactionsGasPricePage'

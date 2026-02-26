@@ -71,7 +71,17 @@ export const navConfig: NavCategory[] = [
     label: 'Ethereum',
     items: [
       { label: 'Introduction', path: 'ethereum/introduction' },
-      { label: 'Transactions', path: 'ethereum/transactions' },
+      {
+        label: 'Transactions',
+        path: 'ethereum/transactions',
+        children: [
+          { label: 'ABI', path: 'ethereum/transactions/abi' },
+          { label: 'Calldata', path: 'ethereum/transactions/calldata' },
+          { label: 'Logs', path: 'ethereum/transactions/logs' },
+          { label: 'Gas', path: 'ethereum/transactions/gas' },
+          { label: 'Gas Price', path: 'ethereum/transactions/gas-price' },
+        ],
+      },
     ],
   },
 ]

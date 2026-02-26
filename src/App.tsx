@@ -24,6 +24,11 @@ import {
   TransactionInclusionReplacingPage,
   EthereumIntroductionPage,
   EthereumTransactionsPage,
+  EthereumTransactionsAbiPage,
+  EthereumTransactionsCalldataPage,
+  EthereumTransactionsLogsPage,
+  EthereumTransactionsGasPage,
+  EthereumTransactionsGasPricePage,
 } from './pages'
 
 function App() {
@@ -55,6 +60,11 @@ function App() {
           <Route path="ethereum" element={<Navigate to="/ethereum/introduction" replace />} />
           <Route path="ethereum/introduction" element={<EthereumIntroductionPage />} />
           <Route path="ethereum/transactions" element={<EthereumTransactionsPage />} />
+          <Route path="ethereum/transactions/abi" element={<EthereumTransactionsAbiPage />} />
+          <Route path="ethereum/transactions/calldata" element={<EthereumTransactionsCalldataPage />} />
+          <Route path="ethereum/transactions/logs" element={<EthereumTransactionsLogsPage />} />
+          <Route path="ethereum/transactions/gas" element={<EthereumTransactionsGasPage />} />
+          <Route path="ethereum/transactions/gas-price" element={<EthereumTransactionsGasPricePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

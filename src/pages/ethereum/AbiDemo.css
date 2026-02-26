@@ -1,0 +1,278 @@
+.abi-demo {
+  margin: 1.5rem 0;
+}
+
+.abi-demo-card {
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.abi-demo-step-indicator {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.abi-demo .step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.abi-demo .step-dot:hover {
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.abi-demo .step-dot.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.abi-demo .step-dot.done {
+  background: rgba(34, 197, 94, 0.4);
+  border-color: rgba(34, 197, 94, 0.6);
+}
+
+.abi-demo h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--accent);
+}
+
+.abi-demo-text {
+  color: var(--text, #e4e4e7);
+  line-height: 1.6;
+  margin: 0 0 1.25rem 0;
+}
+
+.abi-demo-pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.abi-demo-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  opacity: 0.45;
+  transition: opacity 0.25s ease;
+  flex-shrink: 0;
+}
+
+.abi-demo-stage.active {
+  opacity: 1;
+}
+
+.abi-demo-stage.current .abi-demo-icon:not(.working) {
+  box-shadow: 0 0 0 2px var(--accent);
+  transform: scale(1.05);
+}
+
+.abi-demo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.abi-demo-icon .abi-demo-icon-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.abi-demo-sol {
+  background: rgba(59, 130, 246, 0.9);
+}
+
+.abi-demo-solc {
+  background: rgba(168, 85, 247, 0.9);
+}
+
+.abi-demo-solc.working {
+  animation: abi-solc-pulse 1.2s ease-in-out infinite;
+}
+
+.abi-demo-spinner {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #111;
+  border-radius: 50%;
+  animation: abi-spin 0.8s linear infinite;
+}
+
+@keyframes abi-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes abi-solc-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.5); }
+  50% { opacity: 0.95; box-shadow: 0 0 12px 4px rgba(168, 85, 247, 0.3); }
+}
+
+.abi-demo-json {
+  background: rgba(34, 197, 94, 0.9);
+}
+
+.abi-demo-stage-name {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.abi-demo-arrow {
+  width: 20px;
+  height: 2px;
+  background: rgba(148, 163, 184, 0.4);
+  flex-shrink: 0;
+  transition: background 0.25s ease;
+}
+
+.abi-demo-arrow.active {
+  background: var(--accent);
+}
+
+.abi-demo-preview {
+  min-height: 80px;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.abi-demo-sol-preview {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.abi-demo-compiling-preview {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.abi-demo-activity-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.abi-demo-activity-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.abi-demo-progress {
+  height: 6px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.abi-demo-progress-fill {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.9), rgba(168, 85, 247, 0.5));
+  border-radius: 3px;
+  animation: abi-progress 1.5s ease-in-out infinite;
+}
+
+@keyframes abi-progress {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(200%); }
+  100% { transform: translateX(-100%); }
+}
+
+.abi-demo-json-preview {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.abi-demo-preview-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.abi-demo-code {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #94a3b8;
+  font-family: ui-monospace, monospace;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.abi-demo-json-code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.abi-demo-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.abi-demo-next-btn {
+  background: var(--accent);
+  color: #111;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.abi-demo-next-btn:hover {
+  filter: brightness(1.1);
+}
+
+.abi-demo-completed {
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.abi-demo-reset-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.abi-demo-reset-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
