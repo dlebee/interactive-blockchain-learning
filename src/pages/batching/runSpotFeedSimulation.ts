@@ -220,6 +220,7 @@ export async function runAllSimulations(
   const results: SimulationResult = [];
   const total = BATCH_SIZES.length;
   onProgress?.(0, total, BATCH_SIZES[0]!);
+  await new Promise((r) => setTimeout(r, 0));
   for (let i = 0; i < total; i++) {
     const n = BATCH_SIZES[i]!;
     const mode = n === 1 ? 'submit' : 'submitBatch';
@@ -231,6 +232,7 @@ export async function runAllSimulations(
       results.push({ batchSize: n, ok: false, error: msg });
     }
     onProgress?.(i + 1, total, n);
+    await new Promise((r) => setTimeout(r, 0));
   }
   return results;
 }

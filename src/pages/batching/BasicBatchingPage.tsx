@@ -102,6 +102,7 @@ export function BasicBatchingPage() {
 
   const handleSimulate = async () => {
     if (!isCompiled) return
+    setSimResult(null)
     setRunningSim(true)
     setSimProgress(null)
     setSimError(null)
@@ -319,7 +320,7 @@ export function BasicBatchingPage() {
                       ]}
                       labelFormatter={(label) => `Batch size: ${label}`}
                     />
-                    <Legend />
+                    <Legend verticalAlign="bottom" margin={{ top: 16 }} />
                     <Line
                       type="monotone"
                       dataKey="totalGas"
