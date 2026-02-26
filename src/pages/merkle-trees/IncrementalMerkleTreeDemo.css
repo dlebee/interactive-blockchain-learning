@@ -1,0 +1,298 @@
+.imt-demo {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.imt-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 200px;
+}
+
+/* Contract on top */
+.imt-contract-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.imt-contract-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #67e8f9;
+}
+
+.imt-contract-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 8px;
+  min-height: 100px;
+}
+
+.imt-leaves-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.imt-leaves-label {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.9);
+  flex-shrink: 0;
+}
+
+.imt-leaves-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.imt-leaf-slot {
+  min-width: 32px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.25rem;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: ui-monospace, monospace;
+  font-weight: 600;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.imt-leaf-slot.filled {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  color: #86efac;
+}
+
+.imt-leaf-slot.zero {
+  background: rgba(107, 114, 128, 0.15);
+  border: 1px dashed rgba(107, 114, 128, 0.4);
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.imt-roots-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.imt-roots-label {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.imt-roots-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.imt-root-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  font-size: 10px;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  animation: imt-chip-in 0.3s ease-out;
+}
+
+@keyframes imt-chip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.imt-root-name {
+  font-weight: 600;
+  color: #67e8f9;
+}
+
+.imt-root-hash {
+  font-family: ui-monospace, monospace;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.imt-accepted-badge {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.25);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  animation: imt-accepted-in 0.25s ease-out;
+}
+
+@keyframes imt-accepted-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Flow zone */
+.imt-flow-zone {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 32px;
+}
+
+.imt-flow-arrow {
+  font-size: 20px;
+  color: rgba(6, 182, 212, 0.5);
+}
+
+.imt-flying-tx {
+  position: absolute;
+  font-size: 11px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: imt-fly-up 0.48s ease-out forwards;
+}
+
+.imt-flying-add {
+  background: rgba(34, 197, 94, 0.95);
+  color: #fff;
+}
+
+.imt-flying-proof {
+  background: rgba(6, 182, 212, 0.95);
+  color: #fff;
+}
+
+@keyframes imt-fly-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.88);
+  }
+  45% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.95);
+  }
+}
+
+/* Mempool at bottom */
+.imt-mempool-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.6rem 0.9rem;
+  background: rgba(51, 65, 85, 0.4);
+  border-radius: 6px;
+  border: 1px solid rgba(100, 116, 139, 0.4);
+}
+
+.imt-queue-label {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.imt-mempool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.imt-tx {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  font-size: 11px;
+  border: 1px solid;
+  transition: opacity 0.2s, box-shadow 0.2s;
+}
+
+.imt-tx-add {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.imt-tx-add .imt-tx-label {
+  color: #86efac;
+}
+
+.imt-tx-proof {
+  background: rgba(6, 182, 212, 0.12);
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+.imt-tx-proof .imt-tx-label {
+  color: #67e8f9;
+}
+
+.imt-tx.flying {
+  opacity: 0.5;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.4);
+}
+
+.imt-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.imt-caption {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.9);
+  max-width: 560px;
+}
+
+.imt-reset-btn {
+  padding: 0.4rem 0.85rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: #67e8f9;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.45);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.imt-reset-btn:hover {
+  background: rgba(6, 182, 212, 0.25);
+  border-color: rgba(6, 182, 212, 0.6);
+}

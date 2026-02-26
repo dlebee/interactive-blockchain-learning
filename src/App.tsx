@@ -6,6 +6,7 @@ import {
   WhatIsBlockchainPage,
   BlocksHashingPage,
   MerkleTreesPage,
+  IncrementalMerkleTreePage,
   TransactionsPage,
   AccountPage,
   WalletsPage,
@@ -44,6 +45,7 @@ function App() {
           <Route path="blocks-hashing" element={<BlocksHashingPage />} />
           <Route path="advanced-topics" element={<Navigate to="/advanced-topics/merkle-trees" replace />} />
           <Route path="advanced-topics/merkle-trees" element={<MerkleTreesPage />} />
+          <Route path="advanced-topics/merkle-trees/incremental" element={<IncrementalMerkleTreePage />} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="wallets" element={<WalletsPage />} />
