@@ -15,6 +15,7 @@ import {
   NativeCurrencyTokensPage,
   NodesPage,
   NodesGossipPage,
+  NodesTypesPage,
   ConsensusPage,
   ConsensusProofOfWorkPage,
   ConsensusProofOfStakePage,
@@ -49,6 +50,7 @@ function App() {
           <Route path="cryptocurrency/tokens" element={<TokensPage />} />
           <Route path="cryptocurrency/native-currency-tokens" element={<NativeCurrencyTokensPage />} />
           <Route path="nodes" element={<NodesPage />} />
+          <Route path="nodes/types" element={<NodesTypesPage />} />
           <Route path="nodes/gossip" element={<NodesGossipPage />} />
           <Route path="consensus" element={<ConsensusPage />} />
           <Route path="consensus/proof-of-work" element={<ConsensusProofOfWorkPage />} />

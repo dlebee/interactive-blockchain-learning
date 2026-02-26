@@ -38,7 +38,10 @@ export const navConfig: NavCategory[] = [
       {
         label: 'Nodes',
         path: 'nodes',
-        children: [{ label: 'Gossip', path: 'nodes/gossip' }],
+        children: [
+          { label: 'Types of Nodes', path: 'nodes/types' },
+          { label: 'Gossip', path: 'nodes/gossip' },
+        ],
       },
       {
         label: 'Consensus',

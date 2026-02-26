@@ -1,0 +1,221 @@
+.nodes-ecosystem-demo {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.nodes-ecosystem-svg {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* P2P mesh (block authors) */
+.nodes-ecosystem-demo .ecosystem-mesh-edge {
+  stroke: rgba(34, 197, 94, 0.5);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.nodes-ecosystem-demo .ecosystem-p2p-inner {
+  stroke: rgba(34, 197, 94, 0.2);
+  stroke-width: 0.8;
+  fill: none;
+}
+
+.nodes-ecosystem-demo .ecosystem-p2p-node {
+  fill: rgba(34, 197, 94, 0.2);
+  stroke: #22c55e;
+  stroke-width: 2;
+}
+
+.nodes-ecosystem-demo .ecosystem-p2p-node-inner {
+  fill: #22c55e;
+  opacity: 0.9;
+}
+
+.nodes-ecosystem-demo .ecosystem-p2p-node-archive {
+  stroke-width: 2.5;
+  stroke: #16a34a;
+}
+
+.nodes-ecosystem-demo .ecosystem-p2p-node-inner-archive {
+  fill: #16a34a;
+}
+
+/* RPC nodes (part of P2P, blue, on outer layer) */
+.nodes-ecosystem-demo .ecosystem-p2p-mesh-edge {
+  stroke: rgba(34, 197, 94, 0.45);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.nodes-ecosystem-demo .ecosystem-rpc-mesh-edge {
+  stroke: rgba(59, 130, 246, 0.4);
+  stroke-width: 1.2;
+  fill: none;
+}
+
+.nodes-ecosystem-demo .ecosystem-rpc-node {
+  fill: rgba(59, 130, 246, 0.2);
+  stroke: #3b82f6;
+  stroke-width: 2;
+}
+
+.nodes-ecosystem-demo .ecosystem-rpc-node-inner {
+  fill: #3b82f6;
+  opacity: 0.9;
+}
+
+.nodes-ecosystem-demo .ecosystem-rpc-node-archive {
+  stroke-width: 2.5;
+  stroke: #1d4ed8;
+}
+
+.nodes-ecosystem-demo .ecosystem-rpc-node-inner-archive {
+  fill: #1d4ed8;
+}
+
+.nodes-ecosystem-demo .ecosystem-archive-badge {
+  font-size: 8px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+}
+
+.nodes-ecosystem-demo .ecosystem-archive-label {
+  font-size: 9px;
+  fill: var(--text-muted);
+}
+
+/* User nodes */
+.nodes-ecosystem-demo .ecosystem-user-rpc-edge {
+  stroke: rgba(245, 158, 11, 0.25);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  fill: none;
+}
+
+.nodes-ecosystem-demo .ecosystem-user-node {
+  fill: rgba(245, 158, 11, 0.2);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.nodes-ecosystem-demo .ecosystem-user-node-inner {
+  fill: var(--accent);
+  opacity: 0.9;
+}
+
+/* Explorer flow edges */
+.nodes-ecosystem-demo .ecosystem-dedicated-p2p-edge {
+  stroke: rgba(34, 197, 94, 0.4);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.nodes-ecosystem-demo .ecosystem-explorer-edge {
+  stroke: rgba(139, 92, 246, 0.5);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.nodes-ecosystem-demo .ecosystem-web-user-edge {
+  stroke: rgba(139, 92, 246, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  fill: none;
+}
+
+/* Explorer flow boxes */
+.nodes-ecosystem-demo .ecosystem-box {
+  fill: rgba(139, 92, 246, 0.12);
+  stroke: rgba(139, 92, 246, 0.6);
+  stroke-width: 1.5;
+}
+
+.nodes-ecosystem-demo .ecosystem-dedicated-rpc {
+  fill: rgba(59, 130, 246, 0.12);
+  stroke: rgba(59, 130, 246, 0.6);
+}
+
+.nodes-ecosystem-demo .ecosystem-explorer {
+  fill: rgba(139, 92, 246, 0.12);
+  stroke: rgba(139, 92, 246, 0.6);
+}
+
+.nodes-ecosystem-demo .ecosystem-web {
+  fill: rgba(139, 92, 246, 0.18);
+  stroke: rgba(139, 92, 246, 0.7);
+}
+
+.nodes-ecosystem-demo .ecosystem-box-label {
+  font-size: 10px;
+  fill: var(--text);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* Labels */
+.nodes-ecosystem-demo .ecosystem-label-header {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--text);
+  text-anchor: middle;
+}
+
+.nodes-ecosystem-demo .ecosystem-label-sub,
+.nodes-ecosystem-demo .ecosystem-label-mid {
+  font-size: 10px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+}
+
+.nodes-ecosystem-legend {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.8;
+}
+
+.nodes-ecosystem-demo .legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+  vertical-align: middle;
+}
+
+.nodes-ecosystem-demo .p2p-dot {
+  background: #22c55e;
+}
+
+.nodes-ecosystem-demo .rpc-dot {
+  background: #3b82f6;
+}
+
+.nodes-ecosystem-demo .p2p-archive-dot {
+  background: #16a34a;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.nodes-ecosystem-demo .rpc-archive-dot {
+  background: #1d4ed8;
+}
+
+.nodes-ecosystem-demo .user-dot {
+  background: var(--accent);
+}
+
+.nodes-ecosystem-demo .tx-dot {
+  background: #f59e0b;
+}
+
+.nodes-ecosystem-demo .explorer-dot {
+  background: #8b5cf6;
+}

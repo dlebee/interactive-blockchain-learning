@@ -57,6 +57,8 @@ export function NodesPage() {
       </p>
 
       <p className="page-next-link">
+        <Link to="/nodes/types">Types of Nodes</Link>
+        {' · '}
         <Link to="/nodes/gossip">Gossip (advanced)</Link>
         {' · '}
         <Link to="/consensus">Consensus</Link>
