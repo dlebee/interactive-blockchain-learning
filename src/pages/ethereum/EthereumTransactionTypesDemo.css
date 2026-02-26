@@ -1,0 +1,28 @@
+.tx-snippet {
+  margin: 1rem 0 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 6px;
+  border-left: 3px solid rgba(148, 163, 184, 0.3);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+.tx-snippet code {
+  font-family: ui-monospace, 'SF Mono', Monaco, monospace;
+  color: var(--text, #e4e4e7);
+  background: none;
+  padding: 0;
+}
+
+.tx-key {
+  display: inline-block;
+  width: 5ch;
+  color: var(--text-muted);
+}
+
+.tx-val {
+  color: var(--text, #e4e4e7);
+  word-break: break-all;
+}

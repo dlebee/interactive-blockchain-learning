@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import {
   HomePage,
@@ -22,8 +22,8 @@ import {
   TransactionInclusionPage,
   TransactionInclusionNoncePage,
   TransactionInclusionReplacingPage,
-  EthereumPage,
   EthereumIntroductionPage,
+  EthereumTransactionsPage,
 } from './pages'
 
 function App() {
@@ -52,8 +52,9 @@ function App() {
           <Route path="transaction-inclusion" element={<TransactionInclusionPage />} />
           <Route path="transaction-inclusion/nonce" element={<TransactionInclusionNoncePage />} />
           <Route path="transaction-inclusion/replacing" element={<TransactionInclusionReplacingPage />} />
-          <Route path="ethereum" element={<EthereumPage />} />
+          <Route path="ethereum" element={<Navigate to="/ethereum/introduction" replace />} />
           <Route path="ethereum/introduction" element={<EthereumIntroductionPage />} />
+          <Route path="ethereum/transactions" element={<EthereumTransactionsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

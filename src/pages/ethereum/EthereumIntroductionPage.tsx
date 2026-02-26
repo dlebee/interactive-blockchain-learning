@@ -105,6 +105,9 @@ export function EthereumIntroductionPage() {
       </p>
 
       <p className="page-next-link">
+        <Link to="/ethereum/transactions">Transactions →</Link>
+      </p>
+      <p className="page-next-link">
         <Link to="/ethereum">← Ethereum</Link>
       </p>
     </div>
