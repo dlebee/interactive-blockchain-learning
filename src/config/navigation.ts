@@ -73,7 +73,7 @@ export const navConfig: NavCategory[] = [
         path: 'advanced-topics',
         children: [
           { label: 'Merkle Trees', path: 'advanced-topics/merkle-trees' },
-          { label: 'Incremental Merkle Tree', path: 'advanced-topics/merkle-trees/incremental' },
+          { label: 'Incremental Merkle Tree', path: 'advanced-topics/incremental-merkle-tree' },
         ],
       },
     ],

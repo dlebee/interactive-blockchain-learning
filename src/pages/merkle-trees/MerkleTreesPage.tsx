@@ -92,7 +92,7 @@ export function MerkleTreesPage() {
           O(log n) data and support efficient inclusion proofs as new leaves are added.
           Used in Zcash, Tornado Cash-style systems, Semaphore, and the Ethereum
           beacon chain validator set.{" "}
-          <Link to="/advanced-topics/merkle-trees/incremental">Learn more: Incremental Merkle tree</Link>
+          <Link to="/advanced-topics/incremental-merkle-tree">Learn more: Incremental Merkle tree</Link>
           {" · "}
           <a href="https://github.com/zcash/incrementalmerkletree" target="_blank" rel="noopener noreferrer">
             Zcash
