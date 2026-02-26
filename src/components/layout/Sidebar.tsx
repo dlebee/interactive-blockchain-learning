@@ -79,13 +79,35 @@ export function Sidebar() {
                       <li key={child.path}>
                         <NavLink
                           to={`/${child.path}`}
-                          className={({ isActive }) =>
-                            `nav-link nav-sub-link ${isActive ? 'active' : ''}`
-                          }
+                          className={({ isActive }) => {
+                            const childActive =
+                              isActive ||
+                              (child.children?.some(
+                                (c) => location.pathname === `/${c.path}`
+                              ) ?? false)
+                            return `nav-link nav-sub-link ${childActive ? 'active' : ''}`
+                          }}
                           onClick={() => setMobileOpen(false)}
                         >
                           {child.label}
                         </NavLink>
+                        {child.children && child.children.length > 0 && (
+                          <ul className="nav-items nav-sub-items">
+                            {child.children.map((sub) => (
+                              <li key={sub.path}>
+                                <NavLink
+                                  to={`/${sub.path}`}
+                                  className={({ isActive }) =>
+                                    `nav-link nav-sub-link ${isActive ? 'active' : ''}`
+                                  }
+                                  onClick={() => setMobileOpen(false)}
+                                >
+                                  {sub.label}
+                                </NavLink>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </li>
                     ))}
                   </ul>

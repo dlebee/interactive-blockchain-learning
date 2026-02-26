@@ -7,6 +7,8 @@ import {
   BlocksHashingPage,
   MerkleTreesPage,
   IncrementalMerkleTreePage,
+  BatchingPage,
+  BasicBatchingPage,
   TransactionsPage,
   AccountPage,
   WalletsPage,
@@ -46,6 +48,8 @@ function App() {
           <Route path="advanced-topics" element={<Navigate to="/advanced-topics/merkle-trees" replace />} />
           <Route path="advanced-topics/merkle-trees" element={<MerkleTreesPage />} />
           <Route path="advanced-topics/incremental-merkle-tree" element={<IncrementalMerkleTreePage />} />
+          <Route path="advanced-topics/batching" element={<BatchingPage />} />
+          <Route path="advanced-topics/batching/basic" element={<BasicBatchingPage />} />
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="wallets" element={<WalletsPage />} />

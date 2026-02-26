@@ -118,3 +118,27 @@
 .native-currency-table tbody tr:nth-child(even) {
   background: rgba(51, 65, 85, 0.15);
 }
+
+.docs-table {
+  width: 100%;
+  max-width: 520px;
+  margin: 0.75rem 0 1.5rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.docs-table th,
+.docs-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.docs-table th {
+  background: rgba(51, 65, 85, 0.35);
+  font-weight: 600;
+}
+
+.docs-table tbody tr:nth-child(even) {
+  background: rgba(51, 65, 85, 0.15);
+}
