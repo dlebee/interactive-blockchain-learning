@@ -1,4 +1,15 @@
 import { useState, useEffect } from 'react'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ReferenceLine,
+  ReferenceDot,
+  ResponsiveContainer,
+  Tooltip,
+} from 'recharts'
 import './EIP1559Demo.css'
 
 const GAS_TARGET = 50
@@ -40,9 +51,12 @@ function buildSequence(): { blockNum: number; fill: number; baseFee: number }[] 
 const SEQUENCE = buildSequence()
 const TICK_MS = 550
 
-const CHART_WIDTH = 400
-const CHART_HEIGHT = 120
-const PAD = { left: 32, right: 12, top: 8, bottom: 24 }
+const CHART_COLORS = {
+  stroke: 'rgba(6, 182, 212, 0.9)',
+  grid: 'rgba(148, 163, 184, 0.15)',
+  axis: 'rgba(148, 163, 184, 0.8)',
+  referenceLine: 'rgba(6, 182, 212, 0.5)',
+}
 
 export function EIP1559Demo() {
   const [index, setIndex] = useState(0)
@@ -65,23 +79,7 @@ export function EIP1559Demo() {
     visibleBlocks.push(...SEQUENCE.slice(0, wrapCount))
   }
 
-  const chartMinY = Math.min(...SEQUENCE.map((s) => s.baseFee)) - 1
-  const chartMaxY = Math.max(...SEQUENCE.map((s) => s.baseFee)) + 1
-  const chartInnerW = CHART_WIDTH - PAD.left - PAD.right
-  const chartInnerH = CHART_HEIGHT - PAD.top - PAD.bottom
-
-  function xScale(blockNum: number) {
-    return PAD.left + (blockNum / (SEQUENCE.length - 1)) * chartInnerW
-  }
-  function yScale(fee: number) {
-    return PAD.top + chartInnerH - ((fee - chartMinY) / (chartMaxY - chartMinY)) * chartInnerH
-  }
-
-  const pathD = SEQUENCE.map((s, i) =>
-    `${i === 0 ? 'M' : 'L'} ${xScale(s.blockNum)} ${yScale(s.baseFee)}`
-  ).join(' ')
-
-  const currentX = xScale(SEQUENCE[index].blockNum)
+  const currentBlock = SEQUENCE[index]
 
   return (
     <div className="eip1559-demo" aria-label="Animation: blocks with fill %, gas price chart by block number">
@@ -114,73 +112,65 @@ export function EIP1559Demo() {
           </div>
         </div>
         <div className="eip1559-chart-section">
-          <svg
-            className="eip1559-chart"
-            viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <line
-              x1={PAD.left}
-              y1={PAD.top}
-              x2={PAD.left}
-              y2={CHART_HEIGHT - PAD.bottom}
-              className="eip1559-axis"
-            />
-            <line
-              x1={PAD.left}
-              y1={CHART_HEIGHT - PAD.bottom}
-              x2={CHART_WIDTH - PAD.right}
-              y2={CHART_HEIGHT - PAD.bottom}
-              className="eip1559-axis"
-            />
-            <text x={CHART_WIDTH / 2} y={CHART_HEIGHT - 4} className="eip1559-axis-label">
-              Block number
-            </text>
-            <text
-              x={10}
-              y={CHART_HEIGHT / 2}
-              className="eip1559-axis-label"
-              textAnchor="middle"
-              transform={`rotate(-90, 10, ${CHART_HEIGHT / 2})`}
+          <ResponsiveContainer width="100%" height={140}>
+            <LineChart
+              data={SEQUENCE}
+              margin={{ top: 8, right: 12, left: 0, bottom: 20 }}
             >
-              Base fee (gwei)
-            </text>
-            {[0, 5, 10, 15, 19].map((n) => (
-              <text
-                key={n}
-                x={xScale(n)}
-                y={CHART_HEIGHT - PAD.bottom + 14}
-                className="eip1559-tick-label"
-              >
-                {n}
-              </text>
-            ))}
-            {[chartMinY, (chartMinY + chartMaxY) / 2, chartMaxY].map((v) => (
-              <text
-                key={v}
-                x={PAD.left - 6}
-                y={yScale(v) + 4}
-                className="eip1559-tick-label"
-                textAnchor="end"
-              >
-                {Math.round(v)}
-              </text>
-            ))}
-            <path d={pathD} className="eip1559-line" fill="none" />
-            <line
-              x1={currentX}
-              y1={PAD.top}
-              x2={currentX}
-              y2={CHART_HEIGHT - PAD.bottom}
-              className="eip1559-current-line"
-            />
-            <circle
-              cx={currentX}
-              cy={yScale(SEQUENCE[index].baseFee)}
-              r={4}
-              className="eip1559-current-dot"
-            />
-          </svg>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke={CHART_COLORS.grid}
+                vertical={false}
+              />
+              <XAxis
+                dataKey="blockNum"
+                name="Block number"
+                stroke={CHART_COLORS.axis}
+                tick={{ fill: CHART_COLORS.axis, fontSize: 11 }}
+                tickLine={{ stroke: CHART_COLORS.axis }}
+                axisLine={{ stroke: CHART_COLORS.axis }}
+              />
+              <YAxis
+                dataKey="baseFee"
+                name="Base fee (gwei)"
+                stroke={CHART_COLORS.axis}
+                tick={{ fill: CHART_COLORS.axis, fontSize: 11 }}
+                tickLine={{ stroke: CHART_COLORS.axis }}
+                axisLine={{ stroke: CHART_COLORS.axis }}
+                domain={['dataMin - 1', 'dataMax + 1']}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                  border: '1px solid rgba(148, 163, 184, 0.3)',
+                  borderRadius: 6,
+                }}
+                labelStyle={{ color: '#e2e8f0' }}
+                formatter={(value: number | undefined) => [`${value ?? 0} gwei`, 'Base fee']}
+                labelFormatter={(label) => `Block #${label}`}
+              />
+              <Line
+                type="monotone"
+                dataKey="baseFee"
+                stroke={CHART_COLORS.stroke}
+                strokeWidth={2}
+                dot={false}
+                isAnimationActive={false}
+              />
+              <ReferenceLine
+                x={currentBlock.blockNum}
+                stroke={CHART_COLORS.referenceLine}
+                strokeDasharray="3 2"
+                strokeWidth={1}
+              />
+              <ReferenceDot
+                x={currentBlock.blockNum}
+                y={currentBlock.baseFee}
+                r={4}
+                fill={CHART_COLORS.stroke}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
       <p className="eip1559-caption">

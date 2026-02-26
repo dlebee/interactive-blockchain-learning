@@ -102,44 +102,7 @@
 .eip1559-chart-section {
   width: 100%;
   max-width: 420px;
-  min-height: 130px;
-}
-
-.eip1559-chart {
-  width: 100%;
-  height: 120px;
-}
-
-.eip1559-axis {
-  stroke: rgba(148, 163, 184, 0.5);
-  stroke-width: 1px;
-}
-
-.eip1559-axis-label {
-  font-size: 10px;
-  fill: rgba(148, 163, 184, 0.8);
-}
-
-.eip1559-tick-label {
-  font-size: 9px;
-  fill: rgba(148, 163, 184, 0.75);
-}
-
-.eip1559-line {
-  stroke: rgba(6, 182, 212, 0.9);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.eip1559-current-line {
-  stroke: rgba(6, 182, 212, 0.5);
-  stroke-width: 1;
-  stroke-dasharray: 3 2;
-}
-
-.eip1559-current-dot {
-  fill: rgba(6, 182, 212, 0.95);
+  min-height: 160px;
 }
 
 .eip1559-caption {
