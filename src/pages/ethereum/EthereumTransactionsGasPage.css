@@ -1,0 +1,43 @@
+.gas-code-collapse {
+  margin: 1rem 0;
+}
+
+.gas-code-collapse details {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 8px;
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.gas-code-collapse summary {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  list-style: none;
+  user-select: none;
+}
+
+.gas-code-collapse summary::-webkit-details-marker {
+  display: none;
+}
+
+.gas-code-collapse summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.gas-code-collapse details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.gas-code-collapse .gas-code-block {
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  overflow: hidden;
+}
+
+.gas-code-collapse .gas-code-block pre {
+  margin: 0 !important;
+}
