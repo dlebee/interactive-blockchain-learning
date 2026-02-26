@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { CalldataDemo } from './CalldataDemo'
+import { CalldataTransferDemo } from './CalldataTransferDemo'
 
 export function EthereumTransactionsCalldataPage() {
   return (
@@ -31,18 +32,16 @@ export function EthereumTransactionsCalldataPage() {
         information needed to call a specific function within the contract.
       </p>
       <p>
-        The data field is RLP-encoded and includes the following:
+        The data field has the following structure:
       </p>
       <ul>
         <li>
-          <strong>Function selector</strong>: The first 4 bytes represent the
-          signature of the function being called, including its name and argument
-          types.
+          <strong>Function selector</strong>: The first 4 bytes identify the
+          function being called (derived from the function signature).
         </li>
         <li>
-          <strong>Encoded arguments</strong>: The subsequent bytes encode the
-          input arguments in the order expected by the function, based on the
-          contract&apos;s ABI.
+          <strong>ABI-encoded arguments</strong>: The subsequent bytes are the
+          input arguments, ABI-encoded in the order expected by the function.
         </li>
       </ul>
       <p>
@@ -63,6 +62,26 @@ export function EthereumTransactionsCalldataPage() {
         Solidity function, to the function selector, to the final transaction.
       </p>
       <CalldataDemo />
+
+      <h2 id="erc20-transfer-example">
+        <a href="#erc20-transfer-example" className="anchor-link" aria-label="Link to this section">
+          ERC-20 transfer: calldata with arguments
+        </a>
+      </h2>
+      <p>
+        When a function has parameters, the arguments are ABI-encoded after the selector.
+        Each argument is padded to 32 bytes. Use the interactive demo below to see how we
+        build the calldata for a real{' '}
+        <a
+          href="https://etherscan.io/tx/0xb4d11184204428e48d24bc28276510382140facb09831c0ea53d9742b6a21a14"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          USDT transfer
+        </a>
+        {' '}calling <code>transfer(address _to, uint256 _value)</code>.
+      </p>
+      <CalldataTransferDemo />
 
       <p className="page-next-link">
         <Link to="/ethereum/transactions">← Transactions</Link>
