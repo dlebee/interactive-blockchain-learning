@@ -216,3 +216,7 @@
   border-left: 3px solid rgba(148, 163, 184, 0.4);
   font-size: 0.95rem;
 }
+
+.batching-usd-inputs {
+  margin-top: 2rem;
+}

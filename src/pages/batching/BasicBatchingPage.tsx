@@ -13,6 +13,11 @@ import {
   YAxis,
 } from 'recharts'
 import {
+  GasPriceUsdInput,
+  gasToUsd,
+  hasValidUsdInputs,
+} from '../../components/GasPriceUsdInput'
+import {
   compileSpotFeed,
   runAllSimulations,
   type SimulationResult,
@@ -103,6 +108,11 @@ export function BasicBatchingPage() {
     total: number
     batchSize: number
   } | null>(null)
+  const [gasPriceGwei, setGasPriceGwei] = useState('')
+  const [nativeTokenUsd, setNativeTokenUsd] = useState('')
+
+  const hasUsdInputs = hasValidUsdInputs(gasPriceGwei, nativeTokenUsd)
+  const formatGasUsd = (gas: bigint | number) => gasToUsd(gas, gasPriceGwei, nativeTokenUsd)
 
   useEffect(() => {
     fetchSpotFeedSource()
@@ -308,22 +318,30 @@ export function BasicBatchingPage() {
                       <td>{r.ok ? 'OK' : 'Failed'}</td>
                       {hasWarmData ? (
                         <>
-                          <td>{r.ok ? r.gasUsed.toLocaleString() : r.error}</td>
+                          <td>
+                            {r.ok ? r.gasUsed.toLocaleString() : r.error}
+                            {r.ok && hasUsdInputs && ` (${formatGasUsd(r.gasUsed)})`}
+                          </td>
                           <td>
                             {r.ok
                               ? r.gasUsedWarm != null
                                 ? r.gasUsedWarm.toLocaleString()
                                 : r.gasUsed.toLocaleString()
                               : r.error}
+                            {r.ok && hasUsdInputs && (
+                              ` (${formatGasUsd(r.gasUsedWarm ?? r.gasUsed)})`
+                            )}
                           </td>
                         </>
                       ) : (
                         <td>
                           {r.ok ? r.gasUsed.toLocaleString() : r.error}
+                          {r.ok && hasUsdInputs && ` (${formatGasUsd(r.gasUsed)})`}
                         </td>
                       )}
                       <td>
                         {((r.batchSize - 1) * BASE_COST_GAS).toLocaleString()}
+                        {hasUsdInputs && ` (${formatGasUsd((r.batchSize - 1) * BASE_COST_GAS)})`}
                       </td>
                     </tr>
                   ))}
@@ -457,6 +475,9 @@ export function BasicBatchingPage() {
                               : r.ok
                                 ? 'n/a'
                                 : r.error}
+                            {r.ok && r.gasUsedPrehashed != null && hasUsdInputs && (
+                              ` (${formatGasUsd(r.gasUsedPrehashed)})`
+                            )}
                           </td>
                           <td>
                             {r.ok && r.gasUsedPrehashedWarm != null
@@ -466,8 +487,14 @@ export function BasicBatchingPage() {
                                 : r.ok
                                   ? 'n/a'
                                   : r.error}
+                            {r.ok && (r.gasUsedPrehashedWarm ?? r.gasUsedPrehashed) != null && hasUsdInputs && (
+                              ` (${formatGasUsd(r.gasUsedPrehashedWarm ?? r.gasUsedPrehashed!)})`
+                            )}
                           </td>
-                          <td>{((r.batchSize - 1) * BASE_COST_GAS).toLocaleString()}</td>
+                          <td>
+                            {((r.batchSize - 1) * BASE_COST_GAS).toLocaleString()}
+                            {hasUsdInputs && ` (${formatGasUsd((r.batchSize - 1) * BASE_COST_GAS)})`}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -573,6 +600,17 @@ export function BasicBatchingPage() {
               </>
             )}
           </>
+        )}
+
+        {simResult && simResult.length > 0 && (
+          <GasPriceUsdInput
+            gasPriceGwei={gasPriceGwei}
+            onGasPriceChange={setGasPriceGwei}
+            nativeTokenUsd={nativeTokenUsd}
+            onNativeTokenChange={setNativeTokenUsd}
+            caption="Enter gas price and native token value to see USD costs, or fetch base fee and ETH price from Ethereum mainnet and CoinGecko. Check the tables above for the $ value next to each gas column."
+            className="batching-usd-inputs"
+          />
         )}
       </div>
 
