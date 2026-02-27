@@ -32,6 +32,7 @@ const BASE_COST_GAS = 21_000
 const STORAGE_KEY = 'batching-sim-result'
 const CHART_COLORS = {
   totalGas: 'rgba(6, 182, 212, 0.85)',
+  totalGasWarm: 'rgba(251, 191, 36, 0.85)',
   totalSavings: 'rgba(134, 239, 172, 0.85)',
   grid: 'rgba(148, 163, 184, 0.15)',
   axis: 'rgba(148, 163, 184, 0.8)',
@@ -42,11 +43,17 @@ function loadStoredResult(): SimulationResult | null {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return null
     const parsed = JSON.parse(raw) as Array<
-      | { batchSize: number; ok: true; gasUsed: string }
+      | { batchSize: number; ok: true; gasUsed: string; gasUsedWarm?: string }
       | { batchSize: number; ok: false; error: string }
     >
     return parsed.map((r) =>
-      r.ok ? { ...r, gasUsed: BigInt(r.gasUsed) } : r
+      r.ok
+        ? {
+            ...r,
+            gasUsed: BigInt(r.gasUsed),
+            gasUsedWarm: r.gasUsedWarm != null ? BigInt(r.gasUsedWarm) : undefined,
+          }
+        : r
     ) as SimulationResult
   } catch {
     return null
@@ -55,7 +62,9 @@ function loadStoredResult(): SimulationResult | null {
 
 function saveResult(result: SimulationResult) {
   const serializable = result.map((r) =>
-    r.ok ? { ...r, gasUsed: String(r.gasUsed) } : r
+    r.ok
+      ? { ...r, gasUsed: String(r.gasUsed), gasUsedWarm: r.gasUsedWarm != null ? String(r.gasUsedWarm) : undefined }
+      : r
   )
   localStorage.setItem(STORAGE_KEY, JSON.stringify(serializable))
 }
@@ -126,6 +135,7 @@ export function BasicBatchingPage() {
   }
 
   const succeededResults = simResult?.filter((r): r is Extract<typeof r, { ok: true }> => r.ok) ?? []
+  const hasWarmData = succeededResults.some((r) => r.gasUsedWarm != null)
 
   return (
     <div className="page">
@@ -250,7 +260,15 @@ export function BasicBatchingPage() {
                   <tr>
                     <th>Batch size</th>
                     <th>Status</th>
-                    <th>Gas / Error</th>
+                    {hasWarmData ? (
+                      <>
+                        <th>Gas (cold)</th>
+                        <th>Gas (warm)</th>
+                      </>
+                    ) : (
+                      <th>Gas / Error</th>
+                    )}
+                    <th>Savings (21k × (N−1))</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -258,10 +276,24 @@ export function BasicBatchingPage() {
                     <tr key={r.batchSize} className={r.ok ? '' : 'batching-row-failed'}>
                       <td>{r.batchSize}</td>
                       <td>{r.ok ? 'OK' : 'Failed'}</td>
+                      {hasWarmData ? (
+                        <>
+                          <td>{r.ok ? r.gasUsed.toLocaleString() : r.error}</td>
+                          <td>
+                            {r.ok
+                              ? r.gasUsedWarm != null
+                                ? r.gasUsedWarm.toLocaleString()
+                                : r.gasUsed.toLocaleString()
+                              : r.error}
+                          </td>
+                        </>
+                      ) : (
+                        <td>
+                          {r.ok ? r.gasUsed.toLocaleString() : r.error}
+                        </td>
+                      )}
                       <td>
-                        {r.ok
-                          ? r.gasUsed.toLocaleString()
-                          : r.error}
+                        {((r.batchSize - 1) * BASE_COST_GAS).toLocaleString()}
                       </td>
                     </tr>
                   ))}
@@ -273,11 +305,13 @@ export function BasicBatchingPage() {
                 <h3 className="batching-chart-title">
                   Total gas and savings by batch size
                 </h3>
-                <ResponsiveContainer width="100%" height={280}>
+                <ResponsiveContainer width="100%" height={520}>
                   <LineChart
                     data={succeededResults.map((r) => ({
                       batchSize: r.batchSize,
                       totalGas: Number(r.gasUsed),
+                      totalGasWarm:
+                        r.gasUsedWarm != null ? Number(r.gasUsedWarm) : undefined,
                       totalSavings: (r.batchSize - 1) * BASE_COST_GAS,
                     }))}
                     margin={{ top: 36, right: 24, left: 0, bottom: 28 }}
@@ -315,8 +349,12 @@ export function BasicBatchingPage() {
                       }}
                       labelStyle={{ color: '#e2e8f0' }}
                       formatter={(value: number | undefined, name?: string) => [
-                        (value ?? 0).toLocaleString(),
-                        name === 'totalGas' ? 'Total gas' : 'Total savings',
+                        value != null ? value.toLocaleString() : 'n/a',
+                        name === 'totalGas'
+                          ? 'Total gas (cold)'
+                          : name === 'totalGasWarm'
+                            ? 'Total gas (warm)'
+                            : 'Total savings',
                       ]}
                       labelFormatter={(label) => `Batch size: ${label}`}
                     />
@@ -327,9 +365,20 @@ export function BasicBatchingPage() {
                       stroke={CHART_COLORS.totalGas}
                       strokeWidth={2}
                       dot={{ fill: CHART_COLORS.totalGas }}
-                      name="Total gas"
+                      name="Total gas (cold, new slots)"
                       isAnimationActive={false}
                     />
+                    {hasWarmData && (
+                      <Line
+                        type="monotone"
+                        dataKey="totalGasWarm"
+                        stroke={CHART_COLORS.totalGasWarm}
+                        strokeWidth={2}
+                        dot={{ fill: CHART_COLORS.totalGasWarm }}
+                        name="Total gas (warm, slots exist)"
+                        isAnimationActive={false}
+                      />
+                    )}
                     <Line
                       type="monotone"
                       dataKey="totalSavings"
@@ -342,7 +391,8 @@ export function BasicBatchingPage() {
                   </LineChart>
                 </ResponsiveContainer>
                 <p className="batching-chart-caption">
-                  Total gas and theoretical savings share the same scale. Batching N items saves (N − 1) × 21,000 gas vs N separate txs.
+                  Cold = first write to each storage slot. Warm = updating slots that already exist (second run).
+                  Total savings = (N − 1) × 21,000 gas vs N separate txs.
                 </p>
               </div>
             )}

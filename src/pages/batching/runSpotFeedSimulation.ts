@@ -198,11 +198,107 @@ export async function runSpotFeedSimulation(
   return { gasUsed: callResult.totalGasSpent };
 }
 
+/**
+ * Run simulation twice: first call populates storage (cold), second updates same slots (warm).
+ * Returns both gas values. Use for "mean" (cold) vs "lean" (warm, storage already exists).
+ */
+export async function runSpotFeedSimulationWithWarm(
+  bytecode: string,
+  abi: readonly unknown[],
+  mode: 'submit' | 'submitBatch',
+  batchSize: number = 1
+): Promise<{ gasUsed: bigint; gasUsedWarm: bigint }> {
+  const common = new Common({ chain: Mainnet });
+  const vm = await createVM({ common });
+
+  const deployTx = createTx(
+    {
+      nonce: 0n,
+      gasPrice: GAS_PRICE,
+      gasLimit: 10_000_000n,
+      value: 0n,
+      data: hexToBytes(bytecode as `0x${string}`),
+      to: undefined,
+    },
+    { common }
+  );
+  const signedDeploy = deployTx.sign(ORACLE_PRIVATE_KEY);
+  const deployResult = await runTx(vm, {
+    tx: signedDeploy,
+    skipBalance: true,
+  });
+  if (deployResult.execResult.exceptionError) {
+    throw new Error(
+      `Deploy failed: ${deployResult.execResult.exceptionError.error}`
+    );
+  }
+
+  const senderAddress = signedDeploy.getSenderAddress();
+  const contractAddress = createContractAddress(senderAddress, 0n);
+
+  type SpotFeedAbi = readonly unknown[];
+  const spotFeedAbi = abi as SpotFeedAbi;
+  const pairs = generatePairs(batchSize);
+  const buildCallData = () => {
+    if (mode === 'submit' && batchSize === 1) {
+      const p = pairs[0]!;
+      return encodeFunctionData({
+        abi: spotFeedAbi,
+        functionName: 'submit',
+        args: [p.left, p.right, p.price, p.timestamp, p.expiry],
+      });
+    }
+    return encodeFunctionData({
+      abi: spotFeedAbi,
+      functionName: 'submitBatch',
+      args: [
+        pairs.map((p) => p.left),
+        pairs.map((p) => p.right),
+        pairs.map((p) => p.price),
+        pairs.map((p) => p.timestamp),
+        pairs.map((p) => p.expiry),
+      ],
+    });
+  };
+
+  const callData = buildCallData();
+
+  const runCall = async (nonce: bigint) => {
+    const callTx = createTx(
+      {
+        nonce,
+        gasPrice: GAS_PRICE,
+        gasLimit: 30_000_000n,
+        value: 0n,
+        data: hexToBytes(callData),
+        to: contractAddress,
+      },
+      { common }
+    );
+    const signedCall = callTx.sign(ORACLE_PRIVATE_KEY);
+    const callResult = await runTx(vm, {
+      tx: signedCall,
+      skipBalance: true,
+    });
+    if (callResult.execResult.exceptionError) {
+      throw new Error(
+        `Call failed: ${callResult.execResult.exceptionError.error}`
+      );
+    }
+    return callResult.totalGasSpent;
+  };
+
+  const gasUsed = await runCall(1n);
+  const gasUsedWarm = await runCall(2n);
+
+  return { gasUsed, gasUsedWarm };
+}
+
 /** Batch sizes to simulate. */
 export const BATCH_SIZES = [1, 10, 25, 50, 100, 200] as const;
 
 export type SimulationResultItem =
-  | { batchSize: number; ok: true; gasUsed: bigint }
+  | { batchSize: number; ok: true; gasUsed: bigint; gasUsedWarm?: bigint }
   | { batchSize: number; ok: false; error: string };
 
 export type SimulationResult = SimulationResultItem[];
@@ -225,8 +321,13 @@ export async function runAllSimulations(
     const n = BATCH_SIZES[i]!;
     const mode = n === 1 ? 'submit' : 'submitBatch';
     try {
-      const { gasUsed } = await runSpotFeedSimulation(bytecode, abi, mode, n);
-      results.push({ batchSize: n, ok: true, gasUsed });
+      const { gasUsed, gasUsedWarm } = await runSpotFeedSimulationWithWarm(
+        bytecode,
+        abi,
+        mode,
+        n
+      );
+      results.push({ batchSize: n, ok: true, gasUsed, gasUsedWarm });
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       results.push({ batchSize: n, ok: false, error: msg });
