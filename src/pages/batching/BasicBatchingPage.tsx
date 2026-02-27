@@ -320,7 +320,7 @@ export function BasicBatchingPage() {
                       ]}
                       labelFormatter={(label) => `Batch size: ${label}`}
                     />
-                    <Legend verticalAlign="bottom" margin={{ top: 16 }} />
+                    <Legend verticalAlign="bottom" wrapperStyle={{ marginTop: 16 }} />
                     <Line
                       type="monotone"
                       dataKey="totalGas"
