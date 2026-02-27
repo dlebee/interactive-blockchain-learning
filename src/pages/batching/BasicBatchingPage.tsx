@@ -280,7 +280,7 @@ export function BasicBatchingPage() {
                       totalGas: Number(r.gasUsed),
                       totalSavings: (r.batchSize - 1) * BASE_COST_GAS,
                     }))}
-                    margin={{ top: 12, right: 24, left: 0, bottom: 20 }}
+                    margin={{ top: 36, right: 24, left: 0, bottom: 28 }}
                   >
                     <CartesianGrid
                       strokeDasharray="3 3"
@@ -320,7 +320,7 @@ export function BasicBatchingPage() {
                       ]}
                       labelFormatter={(label) => `Batch size: ${label}`}
                     />
-                    <Legend verticalAlign="bottom" wrapperStyle={{ marginTop: 16 }} />
+                    <Legend verticalAlign="top" wrapperStyle={{ paddingBottom: 8 }} />
                     <Line
                       type="monotone"
                       dataKey="totalGas"
