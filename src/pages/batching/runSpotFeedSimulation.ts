@@ -7,7 +7,7 @@ import { Common, Mainnet } from '@ethereumjs/common';
 import { createTx } from '@ethereumjs/tx';
 import { createContractAddress, hexToBytes } from '@ethereumjs/util';
 import { createVM, runTx } from '@ethereumjs/vm';
-import { encodeFunctionData } from 'viem';
+import { encodeAbiParameters, encodeFunctionData, keccak256, parseAbiParameters } from 'viem';
 import { fetchAndLoadSolc } from 'web-solc';
 
 const SOURCE_NAME = 'SpotFeed.sol';
@@ -25,6 +25,21 @@ type SpotUpdate = {
   timestamp: bigint;
   expiry: bigint;
 };
+
+/** Canonical (left, right) with left < right; matches SpotFeed._canonical. */
+function canonical(left: `0x${string}`, right: `0x${string}`): [`0x${string}`, `0x${string}`] {
+  return left < right ? [left, right] : [right, left];
+}
+
+/** Pair key = keccak256(abi.encode(left, right)); matches SpotFeed._pairKey. */
+function pairKey(left: `0x${string}`, right: `0x${string}`): `0x${string}` {
+  const [cLeft, cRight] = canonical(left, right);
+  const encoded = encodeAbiParameters(
+    parseAbiParameters('address, address'),
+    [cLeft, cRight]
+  );
+  return keccak256(encoded as `0x${string}`);
+}
 
 /** Generate N unique (left, right) pairs with left < right; includes native (0) vs tokens (1,2,...). */
 function generatePairs(n: number): SpotUpdate[] {
@@ -294,17 +309,121 @@ export async function runSpotFeedSimulationWithWarm(
   return { gasUsed, gasUsedWarm };
 }
 
+/**
+ * Run prehashed simulation (submitBatchPrehashed): pair keys computed off chain, saves keccak256 per item.
+ * Returns cold and warm gas, same structure as runSpotFeedSimulationWithWarm.
+ */
+export async function runSpotFeedSimulationPrehashedWithWarm(
+  bytecode: string,
+  abi: readonly unknown[],
+  batchSize: number
+): Promise<{ gasUsed: bigint; gasUsedWarm: bigint }> {
+  const common = new Common({ chain: Mainnet });
+  const vm = await createVM({ common });
+
+  const deployTx = createTx(
+    {
+      nonce: 0n,
+      gasPrice: GAS_PRICE,
+      gasLimit: 10_000_000n,
+      value: 0n,
+      data: hexToBytes(bytecode as `0x${string}`),
+      to: undefined,
+    },
+    { common }
+  );
+  const signedDeploy = deployTx.sign(ORACLE_PRIVATE_KEY);
+  const deployResult = await runTx(vm, {
+    tx: signedDeploy,
+    skipBalance: true,
+  });
+  if (deployResult.execResult.exceptionError) {
+    throw new Error(
+      `Deploy failed: ${deployResult.execResult.exceptionError.error}`
+    );
+  }
+
+  const senderAddress = signedDeploy.getSenderAddress();
+  const contractAddress = createContractAddress(senderAddress, 0n);
+
+  const spotFeedAbi = abi as readonly unknown[];
+  const pairs = generatePairs(batchSize);
+
+  const buildCallData = () => {
+    const pairKeys = pairs.map((p) => pairKey(p.left, p.right));
+    if (batchSize === 1) {
+      const p = pairs[0]!;
+      return encodeFunctionData({
+        abi: spotFeedAbi,
+        functionName: 'submitPrehashed',
+        args: [p.left, p.right, pairKeys[0]!, p.price, p.timestamp, p.expiry],
+      });
+    }
+    return encodeFunctionData({
+      abi: spotFeedAbi,
+      functionName: 'submitBatchPrehashed',
+      args: [
+        pairs.map((p) => p.left),
+        pairs.map((p) => p.right),
+        pairKeys,
+        pairs.map((p) => p.price),
+        pairs.map((p) => p.timestamp),
+        pairs.map((p) => p.expiry),
+      ],
+    });
+  };
+
+  const callData = buildCallData();
+
+  const runCall = async (nonce: bigint) => {
+    const callTx = createTx(
+      {
+        nonce,
+        gasPrice: GAS_PRICE,
+        gasLimit: 30_000_000n,
+        value: 0n,
+        data: hexToBytes(callData),
+        to: contractAddress,
+      },
+      { common }
+    );
+    const signedCall = callTx.sign(ORACLE_PRIVATE_KEY);
+    const callResult = await runTx(vm, {
+      tx: signedCall,
+      skipBalance: true,
+    });
+    if (callResult.execResult.exceptionError) {
+      throw new Error(
+        `Call failed: ${callResult.execResult.exceptionError.error}`
+      );
+    }
+    return callResult.totalGasSpent;
+  };
+
+  const gasUsed = await runCall(1n);
+  const gasUsedWarm = await runCall(2n);
+
+  return { gasUsed, gasUsedWarm };
+}
+
 /** Batch sizes to simulate. */
 export const BATCH_SIZES = [1, 10, 25, 50, 100, 200] as const;
 
 export type SimulationResultItem =
-  | { batchSize: number; ok: true; gasUsed: bigint; gasUsedWarm?: bigint }
+  | {
+      batchSize: number
+      ok: true
+      gasUsed: bigint
+      gasUsedWarm?: bigint
+      gasUsedPrehashed?: bigint
+      gasUsedPrehashedWarm?: bigint
+    }
   | { batchSize: number; ok: false; error: string };
 
 export type SimulationResult = SimulationResultItem[];
 
 /**
- * Run simulations for all batch sizes; returns success or error per size.
+ * Run simulations for all batch sizes (regular + prehashed); returns success or error per size.
  * Failed sizes do not abort the run.
  * onProgress(completed, total, batchSize) called after each simulation.
  */
@@ -314,12 +433,13 @@ export async function runAllSimulations(
   onProgress?: (completed: number, total: number, batchSize: number) => void
 ): Promise<SimulationResult> {
   const results: SimulationResult = [];
-  const total = BATCH_SIZES.length;
-  onProgress?.(0, total, BATCH_SIZES[0]!);
-  await new Promise((r) => setTimeout(r, 0));
-  for (let i = 0; i < total; i++) {
+  const total = BATCH_SIZES.length * 2;
+  let completed = 0;
+
+  for (let i = 0; i < BATCH_SIZES.length; i++) {
     const n = BATCH_SIZES[i]!;
     const mode = n === 1 ? 'submit' : 'submitBatch';
+
     try {
       const { gasUsed, gasUsedWarm } = await runSpotFeedSimulationWithWarm(
         bytecode,
@@ -327,13 +447,39 @@ export async function runAllSimulations(
         mode,
         n
       );
-      results.push({ batchSize: n, ok: true, gasUsed, gasUsedWarm });
+
+      let gasUsedPrehashed: bigint | undefined
+      let gasUsedPrehashedWarm: bigint | undefined
+
+      try {
+        const prehashed = await runSpotFeedSimulationPrehashedWithWarm(
+          bytecode,
+          abi,
+          n
+        )
+        gasUsedPrehashed = prehashed.gasUsed
+        gasUsedPrehashedWarm = prehashed.gasUsedWarm
+      } catch {
+        // Prehashed failed; keep regular results only
+      }
+
+      results.push({
+        batchSize: n,
+        ok: true,
+        gasUsed,
+        gasUsedWarm,
+        gasUsedPrehashed,
+        gasUsedPrehashedWarm,
+      })
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       results.push({ batchSize: n, ok: false, error: msg });
     }
-    onProgress?.(i + 1, total, n);
+
+    completed += 2
+    onProgress?.(Math.min(completed, total), total, n);
     await new Promise((r) => setTimeout(r, 0));
   }
+
   return results;
 }

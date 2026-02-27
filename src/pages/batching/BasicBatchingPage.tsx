@@ -34,6 +34,8 @@ const CHART_COLORS = {
   totalGas: 'rgba(6, 182, 212, 0.85)',
   totalGasWarm: 'rgba(251, 191, 36, 0.85)',
   totalSavings: 'rgba(134, 239, 172, 0.85)',
+  totalGasPrehashed: 'rgba(167, 139, 250, 0.85)',
+  totalGasPrehashedWarm: 'rgba(244, 114, 182, 0.85)',
   grid: 'rgba(148, 163, 184, 0.15)',
   axis: 'rgba(148, 163, 184, 0.8)',
 }
@@ -43,7 +45,14 @@ function loadStoredResult(): SimulationResult | null {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return null
     const parsed = JSON.parse(raw) as Array<
-      | { batchSize: number; ok: true; gasUsed: string; gasUsedWarm?: string }
+      | {
+          batchSize: number
+          ok: true
+          gasUsed: string
+          gasUsedWarm?: string
+          gasUsedPrehashed?: string
+          gasUsedPrehashedWarm?: string
+        }
       | { batchSize: number; ok: false; error: string }
     >
     return parsed.map((r) =>
@@ -52,6 +61,10 @@ function loadStoredResult(): SimulationResult | null {
             ...r,
             gasUsed: BigInt(r.gasUsed),
             gasUsedWarm: r.gasUsedWarm != null ? BigInt(r.gasUsedWarm) : undefined,
+            gasUsedPrehashed:
+              r.gasUsedPrehashed != null ? BigInt(r.gasUsedPrehashed) : undefined,
+            gasUsedPrehashedWarm:
+              r.gasUsedPrehashedWarm != null ? BigInt(r.gasUsedPrehashedWarm) : undefined,
           }
         : r
     ) as SimulationResult
@@ -63,7 +76,15 @@ function loadStoredResult(): SimulationResult | null {
 function saveResult(result: SimulationResult) {
   const serializable = result.map((r) =>
     r.ok
-      ? { ...r, gasUsed: String(r.gasUsed), gasUsedWarm: r.gasUsedWarm != null ? String(r.gasUsedWarm) : undefined }
+      ? {
+          ...r,
+          gasUsed: String(r.gasUsed),
+          gasUsedWarm: r.gasUsedWarm != null ? String(r.gasUsedWarm) : undefined,
+          gasUsedPrehashed:
+            r.gasUsedPrehashed != null ? String(r.gasUsedPrehashed) : undefined,
+          gasUsedPrehashedWarm:
+            r.gasUsedPrehashedWarm != null ? String(r.gasUsedPrehashedWarm) : undefined,
+        }
       : r
   )
   localStorage.setItem(STORAGE_KEY, JSON.stringify(serializable))
@@ -136,6 +157,7 @@ export function BasicBatchingPage() {
 
   const succeededResults = simResult?.filter((r): r is Extract<typeof r, { ok: true }> => r.ok) ?? []
   const hasWarmData = succeededResults.some((r) => r.gasUsedWarm != null)
+  const hasPrehashedData = succeededResults.some((r) => r.gasUsedPrehashed != null)
 
   return (
     <div className="page">
@@ -254,6 +276,14 @@ export function BasicBatchingPage() {
         </div>
         {simResult && simResult.length > 0 && (
           <>
+            <p className="batching-summary" style={{ marginBottom: '1rem' }}>
+              Designers may think prehashing saves cost by moving keccak256 off chain. But in EVM,
+              calldata is expensive (16 gas per non zero byte): sending an extra 32 bytes per pair key
+              costs ~512 gas, while the keccak256 the contract skips hashes two 32 byte words
+              (two addresses) for ~42 gas (30 + 6×2). Smaller calldata plus on chain hashing
+              often wins. This is the type of trade off to consider when writing smart contracts.
+            </p>
+            <h3 className="batching-chart-title">Regular (submitBatch)</h3>
             <div className="batching-table-wrap">
               <table className="batching-table">
                 <thead>
@@ -395,6 +425,152 @@ export function BasicBatchingPage() {
                   Total savings = (N − 1) × 21,000 gas vs N separate txs.
                 </p>
               </div>
+            )}
+
+            {hasPrehashedData && (
+              <>
+                <h3 className="batching-chart-title" style={{ marginTop: '2rem' }}>
+                  Prehashed (submitBatchPrehashed)
+                </h3>
+                <p className="batching-chart-caption" style={{ marginTop: 0 }}>
+                  Pair keys computed off chain; saves one keccak256 per item vs submitBatch.
+                </p>
+                <div className="batching-table-wrap">
+                  <table className="batching-table">
+                    <thead>
+                      <tr>
+                        <th>Batch size</th>
+                        <th>Status</th>
+                        <th>Gas (cold)</th>
+                        <th>Gas (warm)</th>
+                        <th>Savings (21k × (N−1))</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {simResult.map((r) => (
+                        <tr key={r.batchSize} className={r.ok ? '' : 'batching-row-failed'}>
+                          <td>{r.batchSize}</td>
+                          <td>{r.ok ? 'OK' : 'Failed'}</td>
+                          <td>
+                            {r.ok && r.gasUsedPrehashed != null
+                              ? r.gasUsedPrehashed.toLocaleString()
+                              : r.ok
+                                ? 'n/a'
+                                : r.error}
+                          </td>
+                          <td>
+                            {r.ok && r.gasUsedPrehashedWarm != null
+                              ? r.gasUsedPrehashedWarm.toLocaleString()
+                              : r.ok && r.gasUsedPrehashed != null
+                                ? r.gasUsedPrehashed.toLocaleString()
+                                : r.ok
+                                  ? 'n/a'
+                                  : r.error}
+                          </td>
+                          <td>{((r.batchSize - 1) * BASE_COST_GAS).toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="batching-chart-wrap">
+                  <h3 className="batching-chart-title">
+                    Prehashed gas and savings by batch size
+                  </h3>
+                  <ResponsiveContainer width="100%" height={520}>
+                    <LineChart
+                      data={succeededResults
+                        .filter((r) => r.gasUsedPrehashed != null)
+                        .map((r) => ({
+                          batchSize: r.batchSize,
+                          totalGasPrehashed: Number(r.gasUsedPrehashed!),
+                          totalGasPrehashedWarm:
+                            r.gasUsedPrehashedWarm != null
+                              ? Number(r.gasUsedPrehashedWarm)
+                              : undefined,
+                          totalSavings: (r.batchSize - 1) * BASE_COST_GAS,
+                        }))}
+                      margin={{ top: 36, right: 24, left: 0, bottom: 28 }}
+                    >
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke={CHART_COLORS.grid}
+                        vertical={false}
+                      />
+                      <XAxis
+                        dataKey="batchSize"
+                        stroke={CHART_COLORS.axis}
+                        tick={{ fill: CHART_COLORS.axis, fontSize: 11 }}
+                        tickLine={{ stroke: CHART_COLORS.axis }}
+                        axisLine={{ stroke: CHART_COLORS.axis }}
+                        label={{
+                          value: 'Batch size',
+                          position: 'insideBottom',
+                          offset: -12,
+                          fill: CHART_COLORS.axis,
+                        }}
+                      />
+                      <YAxis
+                        stroke={CHART_COLORS.axis}
+                        tick={{ fill: CHART_COLORS.axis, fontSize: 11 }}
+                        tickLine={{ stroke: CHART_COLORS.axis }}
+                        axisLine={{ stroke: CHART_COLORS.axis }}
+                        tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                          border: '1px solid rgba(148, 163, 184, 0.3)',
+                          borderRadius: 6,
+                        }}
+                        labelStyle={{ color: '#e2e8f0' }}
+                        formatter={(value: number | undefined, name?: string) => [
+                          value != null ? value.toLocaleString() : 'n/a',
+                          name === 'totalGasPrehashed'
+                            ? 'Prehashed (cold)'
+                            : name === 'totalGasPrehashedWarm'
+                              ? 'Prehashed (warm)'
+                              : 'Total savings',
+                        ]}
+                        labelFormatter={(label) => `Batch size: ${label}`}
+                      />
+                      <Legend verticalAlign="top" wrapperStyle={{ paddingBottom: 8 }} />
+                      <Line
+                        type="monotone"
+                        dataKey="totalGasPrehashed"
+                        stroke={CHART_COLORS.totalGasPrehashed}
+                        strokeWidth={2}
+                        dot={{ fill: CHART_COLORS.totalGasPrehashed }}
+                        name="Prehashed gas (cold)"
+                        isAnimationActive={false}
+                      />
+                      {succeededResults.some((r) => r.gasUsedPrehashedWarm != null) && (
+                        <Line
+                          type="monotone"
+                          dataKey="totalGasPrehashedWarm"
+                          stroke={CHART_COLORS.totalGasPrehashedWarm}
+                          strokeWidth={2}
+                          dot={{ fill: CHART_COLORS.totalGasPrehashedWarm }}
+                          name="Prehashed gas (warm)"
+                          isAnimationActive={false}
+                        />
+                      )}
+                      <Line
+                        type="monotone"
+                        dataKey="totalSavings"
+                        stroke={CHART_COLORS.totalSavings}
+                        strokeWidth={2}
+                        dot={{ fill: CHART_COLORS.totalSavings }}
+                        name="Total savings (21k base × (N−1))"
+                        isAnimationActive={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                  <p className="batching-chart-caption">
+                    Prehashed saves one keccak256 per item vs regular submitBatch.
+                  </p>
+                </div>
+              </>
             )}
           </>
         )}
