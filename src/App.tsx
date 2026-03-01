@@ -35,6 +35,9 @@ import {
   EthereumTransactionsLogsPage,
   EthereumTransactionsGasPage,
   EthereumTransactionsGasPricePage,
+  Layer2Page,
+  StateChannelsPage,
+  RollupsPage,
 } from './pages'
 
 function App() {
@@ -66,6 +69,9 @@ function App() {
           <Route path="consensus/proof-of-work" element={<ConsensusProofOfWorkPage />} />
           <Route path="consensus/proof-of-stake" element={<ConsensusProofOfStakePage />} />
           <Route path="blockspace" element={<BlockspacePage />} />
+          <Route path="layer-2" element={<Layer2Page />} />
+          <Route path="layer-2/state-channels" element={<StateChannelsPage />} />
+          <Route path="layer-2/rollups" element={<RollupsPage />} />
           <Route path="transaction-inclusion" element={<TransactionInclusionPage />} />
           <Route path="transaction-inclusion/nonce" element={<TransactionInclusionNoncePage />} />
           <Route path="transaction-inclusion/replacing" element={<TransactionInclusionReplacingPage />} />
