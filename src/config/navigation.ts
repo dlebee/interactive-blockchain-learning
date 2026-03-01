@@ -53,6 +53,14 @@ export const navConfig: NavCategory[] = [
       },
       { label: 'Blockspace', path: 'blockspace' },
       {
+        label: 'Layer 2 Scaling',
+        path: 'layer-2',
+        children: [
+          { label: 'State Channels', path: 'layer-2/state-channels' },
+          { label: 'Rollups', path: 'layer-2/rollups' },
+        ],
+      },
+      {
         label: 'Transaction Inclusion',
         path: 'transaction-inclusion',
         children: [
