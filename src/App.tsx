@@ -3,6 +3,7 @@ import { Layout } from './components/layout/Layout'
 import {
   HomePage,
   NotFoundPage,
+  OraclesPage,
   WhatIsBlockchainPage,
   BlocksHashingPage,
   MerkleTreesPage,
@@ -65,6 +66,7 @@ function App() {
           <Route path="consensus" element={<ConsensusPage />} />
           <Route path="consensus/proof-of-work" element={<ConsensusProofOfWorkPage />} />
           <Route path="consensus/proof-of-stake" element={<ConsensusProofOfStakePage />} />
+          <Route path="oracles" element={<OraclesPage />} />
           <Route path="blockspace" element={<BlockspacePage />} />
           <Route path="transaction-inclusion" element={<TransactionInclusionPage />} />
           <Route path="transaction-inclusion/nonce" element={<TransactionInclusionNoncePage />} />

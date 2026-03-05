@@ -51,6 +51,7 @@ export const navConfig: NavCategory[] = [
           { label: 'Proof of Stake', path: 'consensus/proof-of-stake' },
         ],
       },
+      { label: 'Oracles', path: 'oracles' },
       { label: 'Blockspace', path: 'blockspace' },
       {
         label: 'Transaction Inclusion',
