@@ -56,7 +56,7 @@ export interface SignerCountResult {
 }
 
 export interface StrategySimResult {
-  strategy: 'simple' | 'batch' | 'bitfield' | 'blsByPubkeys' | 'blsByPoP'
+  strategy: 'simple' | 'batch' | 'bitfield' | 'mpc' | 'blsByPubkeys' | 'blsByPoP'
   results: SignerCountResult[]
 }
 
@@ -346,6 +346,40 @@ export async function runBitfieldSimulation(
   return { strategy: 'bitfield', results }
 }
 
+export async function runMPCSimulation(
+  source: string,
+  onProgress?: (signerCount: number, done: boolean) => void
+): Promise<StrategySimResult> {
+  const results: SignerCountResult[] = []
+  const signerKey = hexToBytes(privateKeyFor(1))
+  const mpcSigner = privateKeyToAddress(privateKeyFor(1))
+  const { bytecode, abi } = await compileContract('MPCThresholdVoting', source)
+
+  for (const n of SIGNER_COUNTS) {
+    onProgress?.(n, false)
+    try {
+      const constructorArgs = encodeAbiParameters(parseAbiParameters('address'), [mpcSigner])
+      const sig = await signVoteHash(voteHash(1n, '0x64617461' as Hex), privateKeyFor(1))
+      const callData = encodeFunctionData({
+        abi,
+        functionName: 'submitVote',
+        args: [1n, '0x64617461' as Hex, sig.v, sig.r, sig.s],
+      })
+      const gasUsed = await deployAndRun(bytecode, constructorArgs, callData, signerKey)
+      results.push({ signerCount: n, ok: true, gasUsed })
+    } catch (e) {
+      results.push({
+        signerCount: n,
+        ok: false,
+        error: e instanceof Error ? e.message : String(e),
+      })
+    }
+    onProgress?.(n, true)
+    await new Promise((r) => setTimeout(r, 0))
+  }
+  return { strategy: 'mpc', results }
+}
+
 /** EIP-2537 pairing cost for 2-pair fast aggregate verify. */
 const BLS_PAIRING_GAS = 102_900n
 
@@ -536,6 +570,7 @@ export interface AllSimResults {
   simple: StrategySimResult
   batch: StrategySimResult
   bitfield: StrategySimResult
+  mpc: StrategySimResult
   blsByPubkeys: StrategySimResult
   blsByPoP: StrategySimResult
 }
@@ -545,6 +580,7 @@ export async function runAllVotingSimulations(
     SimpleThresholdVoting: string
     BatchThresholdVoting: string
     BitfieldThresholdVoting: string
+    MPCThresholdVoting: string
     BLSThresholdVotingByPubkeys: string
     BLSThresholdVotingByPoP: string
   },
@@ -565,6 +601,11 @@ export async function runAllVotingSimulations(
     sources.BitfieldThresholdVoting,
     (n, done) => onProgress?.('Bitfield', done ? null : n)
   )
+  onProgress?.('MPC', null)
+  const mpc = await runMPCSimulation(
+    sources.MPCThresholdVoting,
+    (n, done) => onProgress?.('MPC', done ? null : n)
+  )
   onProgress?.('BLS ByPubkeys', null)
   const blsByPubkeys = await runBLSByPubkeysSimulation(
     sources.BLSThresholdVotingByPubkeys,
@@ -575,5 +616,5 @@ export async function runAllVotingSimulations(
     sources.BLSThresholdVotingByPoP,
     (n, done) => onProgress?.('BLS ByPoP', done ? null : n)
   )
-  return { simple, batch, bitfield, blsByPubkeys, blsByPoP }
+  return { simple, batch, bitfield, mpc, blsByPubkeys, blsByPoP }
 }

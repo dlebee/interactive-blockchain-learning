@@ -4,6 +4,7 @@ const SIMULATION_CONTRACTS = [
   'SimpleThresholdVoting',
   'BatchThresholdVoting',
   'BitfieldThresholdVoting',
+  'MPCThresholdVoting',
   'BLSThresholdVotingByPubkeys',
   'BLSThresholdVotingByPoP',
 ] as const
@@ -18,17 +19,19 @@ export async function fetchAllVotingSources(): Promise<{
   SimpleThresholdVoting: string
   BatchThresholdVoting: string
   BitfieldThresholdVoting: string
+  MPCThresholdVoting: string
   BLSThresholdVotingByPubkeys: string
   BLSThresholdVotingByPoP: string
 }> {
-  const [a, b, c, d, e] = await Promise.all(
+  const [a, b, c, d, e, f] = await Promise.all(
     SIMULATION_CONTRACTS.map((name) => fetchVotingContract(name))
   )
   return {
     SimpleThresholdVoting: a,
     BatchThresholdVoting: b,
     BitfieldThresholdVoting: c,
-    BLSThresholdVotingByPubkeys: d,
-    BLSThresholdVotingByPoP: e,
+    MPCThresholdVoting: d,
+    BLSThresholdVotingByPubkeys: e,
+    BLSThresholdVotingByPoP: f,
   }
 }

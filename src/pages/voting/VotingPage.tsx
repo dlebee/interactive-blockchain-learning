@@ -49,6 +49,7 @@ const CHART_COLORS = {
   simple: 'rgba(6, 182, 212, 0.85)',
   batch: 'rgba(251, 191, 36, 0.85)',
   bitfield: 'rgba(134, 239, 172, 0.85)',
+  mpc: 'rgba(236, 72, 153, 0.85)',
   blsByPubkeys: 'rgba(139, 92, 246, 0.85)',
   blsByPoP: 'rgba(99, 102, 241, 0.85)',
   grid: 'rgba(148, 163, 184, 0.15)',
@@ -59,6 +60,7 @@ const STRATEGY_LABELS: Record<string, string> = {
   simple: 'Simple (N txs)',
   batch: 'Batch (1 tx)',
   bitfield: 'Bitfield (1 tx)',
+  mpc: 'MPC with TSS (1 tx, 1 ecrecover)',
   blsByPubkeys: 'BLS ByPubkeys (G1MSM + pairing)',
   blsByPoP: 'BLS ByPoP (n PoP + G1MSM + pairing)',
 }
@@ -72,6 +74,7 @@ export function VotingPage() {
   const [simpleState, setSimpleState] = useState<ContractState>({ status: 'loading' })
   const [batchState, setBatchState] = useState<ContractState>({ status: 'loading' })
   const [bitfieldState, setBitfieldState] = useState<ContractState>({ status: 'loading' })
+  const [mpcState, setMpcState] = useState<ContractState>({ status: 'loading' })
   const [blsByPubkeysState, setBlsByPubkeysState] = useState<ContractState>({ status: 'loading' })
   const [blsByPoPState, setBlsByPoPState] = useState<ContractState>({ status: 'loading' })
   const [groth16State, setGroth16State] = useState<ContractState>({ status: 'loading' })
@@ -92,23 +95,26 @@ export function VotingPage() {
       fetchVotingContract('SimpleThresholdVoting'),
       fetchVotingContract('BatchThresholdVoting'),
       fetchVotingContract('BitfieldThresholdVoting'),
+      fetchVotingContract('MPCThresholdVoting'),
       fetchVotingContract('BLSThresholdVotingByPubkeys'),
       fetchVotingContract('BLSThresholdVotingByPoP'),
       fetchVotingContract('Groth16VotingVerifier'),
     ])
-      .then(([a, b, c, d, e, f]) => {
+      .then(([a, b, c, d, e, f, g]) => {
         setSimpleState({ status: 'ready', source: a })
         setBatchState({ status: 'ready', source: b })
         setBitfieldState({ status: 'ready', source: c })
-        setBlsByPubkeysState({ status: 'ready', source: d })
-        setBlsByPoPState({ status: 'ready', source: e })
-        setGroth16State({ status: 'ready', source: f })
+        setMpcState({ status: 'ready', source: d })
+        setBlsByPubkeysState({ status: 'ready', source: e })
+        setBlsByPoPState({ status: 'ready', source: f })
+        setGroth16State({ status: 'ready', source: g })
       })
       .catch((e) => {
         const msg = e instanceof Error ? e.message : String(e)
         setSimpleState({ status: 'error', message: msg })
         setBatchState({ status: 'error', message: msg })
         setBitfieldState({ status: 'error', message: msg })
+        setMpcState({ status: 'error', message: msg })
         setBlsByPubkeysState({ status: 'error', message: msg })
         setBlsByPoPState({ status: 'error', message: msg })
         setGroth16State({ status: 'error', message: msg })
@@ -144,6 +150,7 @@ export function VotingPage() {
         const s = allResults.simple.results.find((r) => r.signerCount === n)
         const b = allResults.batch.results.find((r) => r.signerCount === n)
         const bf = allResults.bitfield.results.find((r) => r.signerCount === n)
+        const m = allResults.mpc.results.find((r) => r.signerCount === n)
         const blPk = allResults.blsByPubkeys.results.find((r) => r.signerCount === n)
         const blPop = allResults.blsByPoP.results.find((r) => r.signerCount === n)
         return {
@@ -151,6 +158,7 @@ export function VotingPage() {
           simple: s?.ok ? gasForResult(s) : null,
           batch: b?.ok ? gasForResult(b) : null,
           bitfield: bf?.ok ? gasForResult(bf) : null,
+          mpc: m?.ok ? gasForResult(m) : null,
           blsByPubkeys: blPk?.ok ? gasForResult(blPk) : null,
           blsByPoP: blPop?.ok ? gasForResult(blPop) : null,
         }
@@ -162,6 +170,7 @@ export function VotingPage() {
       d.simple != null ||
       d.batch != null ||
       d.bitfield != null ||
+      d.mpc != null ||
       d.blsByPubkeys != null ||
       d.blsByPoP != null
   )
@@ -276,6 +285,16 @@ export function VotingPage() {
                   />
                   <Line
                     type="monotone"
+                    dataKey="mpc"
+                    stroke={CHART_COLORS.mpc}
+                    strokeWidth={2}
+                    dot={{ fill: CHART_COLORS.mpc }}
+                    name={STRATEGY_LABELS.mpc}
+                    connectNulls
+                    isAnimationActive={false}
+                  />
+                  <Line
+                    type="monotone"
                     dataKey="blsByPubkeys"
                     stroke={CHART_COLORS.blsByPubkeys}
                     strokeWidth={2}
@@ -298,7 +317,7 @@ export function VotingPage() {
               </ResponsiveContainer>
             </div>
             <div className="voting-tables-collapsed">
-              {(['simple', 'batch', 'bitfield', 'blsByPubkeys', 'blsByPoP'] as const).map((key) => {
+              {(['simple', 'batch', 'bitfield', 'mpc', 'blsByPubkeys', 'blsByPoP'] as const).map((key) => {
                 const result = allResults[key]
                 return (
                   <details key={key} className="voting-table-details">
@@ -400,6 +419,18 @@ export function VotingPage() {
         simulation is skipped.
       </p>
       <ContractBlock name="BitfieldThresholdVoting" state={bitfieldState} />
+
+      <h2 id="mpc">
+        <a href="#mpc" className="anchor-link" aria-label="Link to this section">
+          MPC with TSS
+        </a>
+      </h2>
+      <p>
+        N participants run a threshold signature protocol off-chain (e.g. threshold ECDSA).
+        The result is one signature from a derived address. One EOA submits it in one
+        transaction. Gas is constant regardless of signer count: one ecrecover.
+      </p>
+      <ContractBlock name="MPCThresholdVoting" state={mpcState} />
 
       <h2 id="bls">
         <a href="#bls" className="anchor-link" aria-label="Link to this section">

@@ -5,6 +5,7 @@ import "forge-std/Test.sol";
 import "../public/demos/SimpleThresholdVoting.sol";
 import "../public/demos/BatchThresholdVoting.sol";
 import "../public/demos/BitfieldThresholdVoting.sol";
+import "../public/demos/MPCThresholdVoting.sol";
 import "../public/demos/BLSThresholdVotingByPubkeys.sol";
 import "../public/demos/BLSThresholdVotingByPoP.sol";
 import "../public/demos/Groth16VotingVerifier.sol";
@@ -72,6 +73,28 @@ contract VotingTest is Test {
 
         v.submitAggregatedVote(SEQ, DATA, bitfield, vs, rs, ss);
         assertTrue(v.isAgreed(SEQ, keccak256(DATA)));
+    }
+
+    function test_MPCThresholdVoting() public {
+        address mpcSigner = vm.addr(PK0);
+        MPCThresholdVoting v = new MPCThresholdVoting(mpcSigner);
+        (uint8 v0, bytes32 r0, bytes32 s0) = _sign(SEQ, DATA, PK0);
+        v.submitVote(SEQ, DATA, v0, r0, s0);
+        assertTrue(v.isAgreed(SEQ, keccak256(DATA)));
+    }
+
+    function test_MPCThresholdVoting_sequenceComplete_reverts() public {
+        address mpcSigner = vm.addr(PK0);
+        MPCThresholdVoting v = new MPCThresholdVoting(mpcSigner);
+        (uint8 v0, bytes32 r0, bytes32 s0) = _sign(SEQ, DATA, PK0);
+        v.submitVote(SEQ, DATA, v0, r0, s0);
+
+        vm.expectRevert("already agreed");
+        v.submitVote(SEQ, DATA, v0, r0, s0);
+
+        (uint8 v0o, bytes32 r0o, bytes32 s0o) = _sign(SEQ, DATA_OTHER, PK0);
+        vm.expectRevert("sequence complete");
+        v.submitVote(SEQ, DATA_OTHER, v0o, r0o, s0o);
     }
 
     function test_Groth16VotingVerifier() public {
