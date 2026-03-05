@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "forge:build": "forge build",
+    "forge:test": "forge test"
   },
   "dependencies": {
     "@ethereumjs/common": "^10.1.1",

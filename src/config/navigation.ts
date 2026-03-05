@@ -84,6 +84,7 @@ export const navConfig: NavCategory[] = [
         ],
       },
       { label: 'Oracles', path: 'oracles' },
+      { label: 'Voting', path: 'voting' },
     ],
   },
   {

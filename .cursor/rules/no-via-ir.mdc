@@ -1,0 +1,13 @@
+---
+description: Never enable via_ir in Solidity/Foundry config
+alwaysApply: true
+---
+
+# No via_ir
+
+**Never enable `via_ir = true`** in foundry.toml or any Solidity compiler config.
+
+If a contract hits "stack too deep", fix the contract instead:
+- Extract logic into helper functions
+- Use scoped blocks `{ }` to limit variable lifetime
+- Pack related variables into a struct
