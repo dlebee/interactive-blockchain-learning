@@ -15,6 +15,19 @@ export async function fetchVotingContract(name: string): Promise<string> {
   return res.text()
 }
 
+export async function fetchCircuit(name: string): Promise<string> {
+  const res = await fetch(`${DEMO_BASE}/${name}.circom`)
+  if (!res.ok) throw new Error(`Failed to load ${name}.circom`)
+  return res.text()
+}
+
+/** Fetch contract, return null on 404. */
+async function fetchContractOptional(name: string): Promise<string | null> {
+  const res = await fetch(`${DEMO_BASE}/${name}.sol`)
+  if (!res.ok) return null
+  return res.text()
+}
+
 export async function fetchAllVotingSources(): Promise<{
   SimpleThresholdVoting: string
   BatchThresholdVoting: string
@@ -22,16 +35,25 @@ export async function fetchAllVotingSources(): Promise<{
   MPCThresholdVoting: string
   BLSThresholdVotingByPubkeys: string
   BLSThresholdVotingByPoP: string
+  Groth16VotingVerifier: string
+  Groth16VotingVerifier5: string | null
+  MiMC: string
 }> {
-  const [a, b, c, d, e, f] = await Promise.all(
-    SIMULATION_CONTRACTS.map((name) => fetchVotingContract(name))
-  )
+  const results = await Promise.all([
+    ...SIMULATION_CONTRACTS.map((name) => fetchVotingContract(name)),
+    fetchVotingContract('Groth16VotingVerifier'),
+    fetchContractOptional('Groth16VotingVerifier5'),
+    fetchVotingContract('MiMC'),
+  ])
   return {
-    SimpleThresholdVoting: a,
-    BatchThresholdVoting: b,
-    BitfieldThresholdVoting: c,
-    MPCThresholdVoting: d,
-    BLSThresholdVotingByPubkeys: e,
-    BLSThresholdVotingByPoP: f,
+    SimpleThresholdVoting: results[0]!,
+    BatchThresholdVoting: results[1]!,
+    BitfieldThresholdVoting: results[2]!,
+    MPCThresholdVoting: results[3]!,
+    BLSThresholdVotingByPubkeys: results[4]!,
+    BLSThresholdVotingByPoP: results[5]!,
+    Groth16VotingVerifier: results[6]!,
+    Groth16VotingVerifier5: results[7] ?? null,
+    MiMC: results[8]!,
   }
 }

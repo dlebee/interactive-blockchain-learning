@@ -7,3 +7,9 @@ solc = "0.8.24"
 via_ir = false
 optimizer = true
 optimizer_runs = 200
+# bn254 precompiles (ecAdd 0x06, ecMul 0x07, pairing 0x08) are in all EVM versions since Byzantium
+evm_version = "shanghai"
+gas_reports = ["Groth16VotingVerifier"]
+
+# Allow test to read proof JSON and write groth16_gas.json
+fs_permissions = [{ access = "read-write", path = "./public/demos" }]

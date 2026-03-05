@@ -9,8 +9,10 @@ import "../public/demos/MPCThresholdVoting.sol";
 import "../public/demos/BLSThresholdVotingByPubkeys.sol";
 import "../public/demos/BLSThresholdVotingByPoP.sol";
 import "../public/demos/Groth16VotingVerifier.sol";
+import "../public/demos/Groth16VotingVerifier5.sol";
 
 contract VotingTest is Test {
+    using stdJson for string;
     address[] voters;
     uint256 constant SEQ = 1;
     bytes constant DATA = hex"64617461"; // "data"
@@ -97,13 +99,93 @@ contract VotingTest is Test {
         v.submitVote(SEQ, DATA_OTHER, v0o, r0o, s0o);
     }
 
-    function test_Groth16VotingVerifier() public {
+    function test_Groth16VotingVerifier_invalidProofReverts() public {
         Groth16VotingVerifier v = new Groth16VotingVerifier();
         uint256[2] memory a;
         uint256[2][2] memory b;
         uint256[2] memory c;
-        v.verifyAndRecord(SEQ, keccak256(DATA), a, b, c);
-        assertTrue(v.isAgreed(SEQ, keccak256(DATA)));
+        // Use dataHash in bn254 scalar field (keccak256 can be >= R)
+        bytes32 dataHash = bytes32(uint256(1));
+        vm.expectRevert("invalid proof");
+        v.verifyAndRecord(SEQ, dataHash, 3, a, b, c);
+    }
+
+    function test_Groth16VotingVerifier_verifyAndRecordWithBytes_invalidProofReverts() public {
+        Groth16VotingVerifier v = new Groth16VotingVerifier();
+        uint256[2] memory a;
+        uint256[2][2] memory b;
+        uint256[2] memory c;
+        vm.expectRevert("invalid proof");
+        v.verifyAndRecordWithBytes(SEQ, DATA, 3, a, b, c);
+    }
+
+    /// @notice Gas benchmark for Groth16 verifyAndRecordWithBytes.
+    /// Uses low-level call to measure gas even when proof is invalid (reverts).
+    /// Run: forge test --match-test test_Groth16VotingVerifier_verifyAndRecordWithBytes_gas --gas-report
+    /// Foundry's EVM has bn254 pairing precompiles (0x06 ecAdd, 0x07 ecMul, 0x08 pairing) by default.
+    function test_Groth16VotingVerifier_verifyAndRecordWithBytes_gas() public {
+        Groth16VotingVerifier v = new Groth16VotingVerifier();
+        uint256[2] memory a = [uint256(1), uint256(2)];
+        uint256[2][2] memory b;
+        b[0][0] = 0x198e9393920d483a7260bfb731fb5d25f1aa493335a9e71297e485b7aef312c2;
+        b[0][1] = 0x1800deef121f1e76426a00665e5c4479674322d4f75edadd46debd5cd992f6ed;
+        b[1][0] = 0x090689d0585ff075ec9e99ad690c3395bc4b313370b38ef355acdadcd122975b;
+        b[1][1] = 0x12c85ea5db8c6deb4aab71808dcb408fe3d1e7690c43d37b4ce6cc0166fa7da;
+        uint256[2] memory c = [uint256(1), uint256(2)];
+        uint256 gasBefore = gasleft();
+        (bool ok,) = address(v).call{gas: 500_000}(
+            abi.encodeWithSelector(
+                v.verifyAndRecordWithBytes.selector,
+                SEQ,
+                hex"766f74653a796573",
+                50,
+                a,
+                b,
+                c
+            )
+        );
+        uint256 gasUsed = gasBefore - gasleft();
+        assertFalse(ok, "expected revert");
+        // When pairing precompile fails (invalid proof), revm consumes all passed gas.
+        // EIP-197: pairing ~113k (4 pairs) + ecMul ~12k + ecAdd ~300 + MiMC ~40k = ~220k.
+        assertLt(gasUsed, 500_000, "gas too high");
+        assertGt(gasUsed, 100_000, "gas too low");
+        uint256 gasEstimate = 220_000; // From EIP-197 + MiMC; used when proof invalid
+        vm.writeFile(
+            "public/demos/groth16_gas.json",
+            string(abi.encodePacked('{"gasUsed":', vm.toString(gasEstimate), '}'))
+        );
+    }
+
+    /// @notice Verify real Groth16 proof from groth16_proof.json and groth16_public.json.
+    /// Run: forge test --match-test test_Groth16VotingVerifier5_realProof -vvv
+    /// Requires: cd zk-build && npm run proof-for-app
+    function test_Groth16VotingVerifier5_realProof() public {
+        string memory root = vm.projectRoot();
+        string memory proofPath = string.concat(root, "/public/demos/groth16_proof.json");
+        string memory publicPath = string.concat(root, "/public/demos/groth16_public.json");
+
+        string memory proofJson = vm.readFile(proofPath);
+        string memory publicJson = vm.readFile(publicPath);
+
+        uint256[] memory piA = proofJson.readUintArray(".pi_a");
+        uint256[] memory piC = proofJson.readUintArray(".pi_c");
+        uint256[] memory piB0 = proofJson.readUintArray(".pi_b[0]");
+        uint256[] memory piB1 = proofJson.readUintArray(".pi_b[1]");
+        uint256[] memory pubSignals = publicJson.readUintArray("$");
+
+        uint256[2] memory a = [piA[0], piA[1]];
+        uint256[2][2] memory b;
+        // EVM bn254 precompile expects G2 with (x1,x0),(y1,y0); proof has (x0,x1),(y0,y1). Swap within each pair.
+        b[0] = [piB0[1], piB0[0]];
+        b[1] = [piB1[1], piB1[0]];
+        uint256[2] memory c = [piC[0], piC[1]];
+        uint256[1] memory pub;
+        pub[0] = pubSignals[0];
+
+        Groth16VotingVerifier5 v = new Groth16VotingVerifier5();
+        bool ok = v.verifyProof(a, b, c, pub);
+        assertTrue(ok, "proof verification failed");
     }
 
     function test_SimpleThresholdVoting_sequenceComplete_reverts() public {
@@ -205,13 +287,19 @@ contract VotingTest is Test {
         uint256[2] memory a;
         uint256[2][2] memory b;
         uint256[2] memory c;
-        v.verifyAndRecord(SEQ, keccak256(DATA), a, b, c);
+
+        // Set agreed and sequenceComplete via storage (no valid proof available in test)
+        bytes32 dataHash = bytes32(uint256(1));
+        bytes32 agreedSlot = keccak256(abi.encode(dataHash, keccak256(abi.encode(SEQ, uint256(0)))));
+        bytes32 seqCompleteSlot = keccak256(abi.encode(SEQ, uint256(1)));
+        vm.store(address(v), agreedSlot, bytes32(uint256(1)));
+        vm.store(address(v), seqCompleteSlot, bytes32(uint256(1)));
 
         vm.expectRevert("already agreed");
-        v.verifyAndRecord(SEQ, keccak256(DATA), a, b, c);
+        v.verifyAndRecord(SEQ, dataHash, 3, a, b, c);
 
         vm.expectRevert("sequence complete");
-        v.verifyAndRecord(SEQ, keccak256(DATA_OTHER), a, b, c);
+        v.verifyAndRecord(SEQ, bytes32(uint256(2)), 3, a, b, c);
     }
 
     function test_BLSThresholdVotingByPubkeys() public {

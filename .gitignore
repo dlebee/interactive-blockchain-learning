@@ -26,3 +26,6 @@ dist-ssr
 # Foundry
 out/
 cache/
+
+# ZK build artifacts (circuits, keys, proofs)
+zk-build/

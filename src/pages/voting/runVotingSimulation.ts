@@ -98,6 +98,44 @@ async function compileContract(
   return { bytecode, abi: contract.abi }
 }
 
+async function compileContractMulti(
+  sources: Record<string, string>,
+  contractName: string
+): Promise<{ bytecode: string; abi: readonly unknown[] }> {
+  const solc = await fetchAndLoadSolc('^0.8.0')
+  const input = {
+    language: 'Solidity',
+    sources: Object.fromEntries(Object.entries(sources).map(([k, v]) => [k, { content: v }])),
+    settings: {
+      optimizer: { enabled: true, runs: 200 },
+      outputSelection: { '*': { '*': ['abi', 'evm.bytecode'] } },
+    },
+  }
+  const output = await solc.compile(input)
+  solc.stopWorker()
+
+  const errors = output.errors?.filter((e: { severity?: string }) => e.severity === 'error')
+  if (errors?.length) {
+    const msg = errors
+      .map((e: { formattedMessage?: string }) => e.formattedMessage ?? String(e))
+      .join('\n')
+    throw new Error(`Compilation failed:\n${msg}`)
+  }
+
+  const contracts = output.contracts as unknown as Record<
+    string,
+    Record<string, { evm?: { bytecode?: { object?: string } }; abi?: unknown[] }>
+  >
+  for (const fileContracts of Object.values(contracts)) {
+    const c = fileContracts?.[contractName]
+    if (c?.evm?.bytecode?.object && c?.abi) {
+      const bc = c.evm.bytecode.object
+      return { bytecode: bc.startsWith('0x') ? bc : `0x${bc}`, abi: c.abi }
+    }
+  }
+  throw new Error(`No bytecode or ABI for ${contractName}`)
+}
+
 async function deployAndRun(
   bytecode: string,
   constructorArgs: Hex,
@@ -145,6 +183,76 @@ async function deployAndRun(
     throw new Error(`Call failed: ${callResult.execResult.exceptionError.error}`)
   }
   return callResult.totalGasSpent
+}
+
+/** Result of deploy + call. */
+type DeployAndRunResult = { gasUsed: bigint; reverted: boolean; returnValue?: Uint8Array }
+
+/** Like deployAndRun but returns gas used even when the call reverts (e.g. invalid proof).
+ * When callGasLimit is set, caps the call's gas (pairing precompile failure consumes all passed gas).
+ */
+async function deployAndRunCaptureGasOnRevert(
+  bytecode: string,
+  constructorArgs: Hex,
+  callData: Hex,
+  signerKey: Uint8Array,
+  common?: InstanceType<typeof Common>,
+  callGasLimit?: bigint
+): Promise<bigint> {
+  const res = await deployAndRunWithResult(bytecode, constructorArgs, callData, signerKey, common, callGasLimit)
+  return res.gasUsed
+}
+
+async function deployAndRunWithResult(
+  bytecode: string,
+  constructorArgs: Hex,
+  callData: Hex,
+  signerKey: Uint8Array,
+  common?: InstanceType<typeof Common>,
+  callGasLimit?: bigint
+): Promise<DeployAndRunResult> {
+  const c = common ?? new Common({ chain: Mainnet })
+  const vm = await createVM({ common: c })
+  const deployData = concatHex([bytecode as Hex, constructorArgs])
+
+  const deployTx = createTx(
+    {
+      nonce: 0n,
+      gasPrice: GAS_PRICE,
+      gasLimit: 40_000_000n,
+      value: 0n,
+      data: hexToBytes(deployData),
+      to: undefined,
+    },
+    { common: c }
+  )
+  const signedDeploy = deployTx.sign(signerKey)
+  const deployResult = await runTx(vm, { tx: signedDeploy, skipBalance: true })
+  if (deployResult.execResult.exceptionError) {
+    throw new Error(`Deploy failed: ${deployResult.execResult.exceptionError.error}`)
+  }
+
+  const sender = signedDeploy.getSenderAddress()
+  const contractAddr = createContractAddress(sender, 0n)
+
+  const callTx = createTx(
+    {
+      nonce: 1n,
+      gasPrice: GAS_PRICE,
+      gasLimit: callGasLimit ?? 40_000_000n,
+      value: 0n,
+      data: hexToBytes(callData),
+      to: contractAddr,
+    },
+    { common: c }
+  )
+  const signedCall = callTx.sign(signerKey)
+  const callResult = await runTx(vm, { tx: signedCall, skipBalance: true })
+  return {
+    gasUsed: callResult.totalGasSpent,
+    reverted: callResult.execResult.exceptionError != null,
+    returnValue: callResult.execResult.returnValue,
+  }
 }
 
 async function deployAndRunMultiple(
@@ -566,6 +674,120 @@ export async function runBLSByPoPSimulation(
   return { strategy: 'blsByPoP', results }
 }
 
+/** snarkjs proof.json format */
+interface Groth16Proof {
+  pi_a: [string, string, string]
+  pi_b: [[string, string], [string, string], [string, string]]
+  pi_c: [string, string, string]
+  publicSignals?: string[]
+}
+
+/** Groth16 verify cost is constant regardless of signer count.
+ * Uses real proof from groth16_proof.json when available (run: cd zk-build && npm run proof-for-app).
+ * Otherwise falls back to dummy proof + EIP-197 estimate.
+ */
+export async function runGroth16Simulation(
+  groth16Source: string,
+  mimcSource: string,
+  onProgress?: (done: boolean) => void,
+  verifier50Source?: string | null
+): Promise<{ gasUsed: bigint; ok: boolean; error?: string }> {
+  onProgress?.(false)
+  try {
+    const useRealProof = verifier50Source != null
+    const verifierName = useRealProof ? 'Groth16VotingVerifier5' : 'Groth16VotingVerifier'
+    const sources: Record<string, string> = useRealProof
+      ? { 'Groth16VotingVerifier5.sol': verifier50Source }
+      : { 'MiMC.sol': mimcSource, 'Groth16VotingVerifier.sol': groth16Source }
+    const { bytecode, abi } = await compileContractMulti(sources, verifierName)
+    const signerKey = hexToBytes(privateKeyFor(1))
+    const constructorArgs = '0x' as Hex
+
+    let proofA: [bigint, bigint]
+    let proofB: [[bigint, bigint], [bigint, bigint]]
+    let proofC: [bigint, bigint]
+    let seqNum: bigint
+    let data: Hex
+    let threshold: bigint
+    let publicSignals: string[] = []
+
+    if (useRealProof) {
+      const [proofRes, publicRes] = await Promise.all([
+        fetch('/demos/groth16_proof.json'),
+        fetch('/demos/groth16_public.json'),
+      ])
+      if (!proofRes.ok || !publicRes.ok) {
+        throw new Error('Real proof requires groth16_proof.json and groth16_public.json. Run: cd zk-build && npm run proof-for-app')
+      }
+      const proof = (await proofRes.json()) as Groth16Proof
+      publicSignals = (await publicRes.json()) as string[]
+      proofA = [BigInt(proof.pi_a[0]), BigInt(proof.pi_a[1])]
+      // EVM bn254 precompile expects G2 as (x1,x0),(y1,y0); proof has (x0,x1),(y0,y1). Swap within each pair.
+      proofB = [
+        [BigInt(proof.pi_b[0][1]), BigInt(proof.pi_b[0][0])],
+        [BigInt(proof.pi_b[1][1]), BigInt(proof.pi_b[1][0])],
+      ]
+      proofC = [BigInt(proof.pi_c[0]), BigInt(proof.pi_c[1])]
+      seqNum = 1n
+      data = '0x766f74653a796573' as Hex
+      threshold = BigInt(publicSignals[1] ?? 50)
+    } else {
+      proofA = [1n, 2n]
+      proofB = [
+        [0x198e9393920d483a7260bfb731fb5d25f1aa493335a9e71297e485b7aef312c2n, 0x1800deef121f1e76426a00665e5c4479674322d4f75edadd46debd5cd992f6edn],
+        [0x090689d0585ff075ec9e99ad690c3395bc4b313370b38ef355acdadcd122975bn, 0x12c85ea5db8c6deb4aab71808dcb408fe3d1e7690c43d37b4ce6cc0166fa7dan],
+      ]
+      proofC = [1n, 2n]
+      seqNum = 1n
+      data = '0x766f74653a796573' as Hex
+      threshold = 50n
+    }
+
+    const callData = useRealProof
+      ? encodeFunctionData({
+          abi,
+          functionName: 'verifyProof',
+          args: [proofA, proofB, proofC, publicSignals.map((s) => BigInt(s))],
+        })
+      : encodeFunctionData({
+          abi,
+          functionName: 'verifyAndRecordWithBytes',
+          args: [seqNum, data, threshold, proofA, proofB, proofC],
+        })
+    const common = new Common({ chain: Mainnet, hardfork: 'shanghai' })
+    const gasLimit = useRealProof ? 500_000n : 500_000n
+    const res = await deployAndRunWithResult(
+      bytecode,
+      constructorArgs,
+      callData,
+      signerKey,
+      common,
+      gasLimit
+    )
+    onProgress?.(true)
+    if (res.reverted) {
+      return { gasUsed: res.gasUsed, ok: false, error: 'Verification reverted' }
+    }
+    const verified =
+      res.returnValue != null &&
+      res.returnValue.length >= 32 &&
+      Number(res.returnValue[31]) === 1
+    const gasUsed = !useRealProof && res.gasUsed > 300_000n ? 220_000n : res.gasUsed
+    return {
+      gasUsed,
+      ok: verified,
+      error: verified ? undefined : 'Proof invalid',
+    }
+  } catch (e) {
+    onProgress?.(true)
+    return {
+      gasUsed: 0n,
+      ok: false,
+      error: e instanceof Error ? e.message : String(e),
+    }
+  }
+}
+
 export interface AllSimResults {
   simple: StrategySimResult
   batch: StrategySimResult
@@ -573,6 +795,7 @@ export interface AllSimResults {
   mpc: StrategySimResult
   blsByPubkeys: StrategySimResult
   blsByPoP: StrategySimResult
+  groth16?: { gasUsed: bigint; ok: boolean; error?: string }
 }
 
 export async function runAllVotingSimulations(
@@ -583,6 +806,9 @@ export async function runAllVotingSimulations(
     MPCThresholdVoting: string
     BLSThresholdVotingByPubkeys: string
     BLSThresholdVotingByPoP: string
+    Groth16VotingVerifier?: string
+    Groth16VotingVerifier5?: string | null
+    MiMC?: string
   },
   onProgress?: (strategy: string, signerCount: number | null) => void
 ): Promise<AllSimResults> {
@@ -616,5 +842,15 @@ export async function runAllVotingSimulations(
     sources.BLSThresholdVotingByPoP,
     (n, done) => onProgress?.('BLS ByPoP', done ? null : n)
   )
-  return { simple, batch, bitfield, mpc, blsByPubkeys, blsByPoP }
+  let groth16: AllSimResults['groth16']
+  if (sources.Groth16VotingVerifier && sources.MiMC) {
+    onProgress?.('Groth16', null)
+    groth16 = await runGroth16Simulation(
+      sources.Groth16VotingVerifier,
+      sources.MiMC,
+      (done) => onProgress?.('Groth16', done ? null : 0),
+      sources.Groth16VotingVerifier5 ?? undefined
+    )
+  }
+  return { simple, batch, bitfield, mpc, blsByPubkeys, blsByPoP, groth16 }
 }

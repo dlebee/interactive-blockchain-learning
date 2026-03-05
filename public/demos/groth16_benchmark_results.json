@@ -1,0 +1,11 @@
+{
+  "results": [
+    { "signers": 3, "totalMs": 8500, "witnessMs": 1200, "proofMs": 7300 },
+    { "signers": 5, "totalMs": 12000, "witnessMs": 1800, "proofMs": 10200 },
+    { "signers": 10, "totalMs": 22000, "witnessMs": 3200, "proofMs": 18800 },
+    { "signers": 20, "totalMs": 42000, "witnessMs": 6200, "proofMs": 35800 },
+    { "signers": 50, "totalMs": 95000, "witnessMs": 14500, "proofMs": 80500 }
+  ],
+  "gasEstimate": 220000,
+  "note": "Placeholder. Run 'cd zk-build && npm run setup_benchmark && npm run benchmark' for real data."
+}

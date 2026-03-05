@@ -135,6 +135,14 @@
   color: #e2e8f0;
 }
 
+.voting-chart-legend-item {
+  color: #e2e8f0;
+}
+
+.voting-chart-legend-item:hover {
+  text-decoration: underline !important;
+}
+
 .voting-tables-collapsed {
   margin-top: 1rem;
   display: flex;
