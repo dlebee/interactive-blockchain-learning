@@ -186,6 +186,20 @@ export function VotingPage() {
         Multiple participants can vote on data and submit the result to the blockchain.
         Different strategies trade off censorship resistance, gas cost, and complexity.
       </p>
+      <p>
+        <strong>Only the simple model (each participant submits their vote individually) is
+        censorship resistant.</strong> No single party can block the outcome, since anyone
+        can submit any vote. The other strategies rely on aggregation or a single submitter,
+        which a censoring party could block. That said, individual submission is not always
+        viable: gas cost scales with signer count, and for large committees the cost or
+        coordination may be prohibitive.
+      </p>
+      <p>
+        Censorship does not prevent the majority from being reached: if enough votes get
+        through, the threshold is met. It can only delay or block the outcome. In many
+        settings, keeping gas costs low is more beneficial than censorship resistance,
+        and the cheaper strategies (batch, bitfield, MPC, BLS) are the right choice.
+      </p>
 
       <h2 id="simulate-gas">
         <a href="#simulate-gas" className="anchor-link" aria-label="Link to this section">
