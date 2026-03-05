@@ -188,21 +188,6 @@ async function deployAndRun(
 /** Result of deploy + call. */
 type DeployAndRunResult = { gasUsed: bigint; reverted: boolean; returnValue?: Uint8Array }
 
-/** Like deployAndRun but returns gas used even when the call reverts (e.g. invalid proof).
- * When callGasLimit is set, caps the call's gas (pairing precompile failure consumes all passed gas).
- */
-async function deployAndRunCaptureGasOnRevert(
-  bytecode: string,
-  constructorArgs: Hex,
-  callData: Hex,
-  signerKey: Uint8Array,
-  common?: InstanceType<typeof Common>,
-  callGasLimit?: bigint
-): Promise<bigint> {
-  const res = await deployAndRunWithResult(bytecode, constructorArgs, callData, signerKey, common, callGasLimit)
-  return res.gasUsed
-}
-
 async function deployAndRunWithResult(
   bytecode: string,
   constructorArgs: Hex,
